@@ -7,6 +7,7 @@ import { OperationComponent } from './operation/operation.component';
 import { OutputStreamComponent } from './output-stream/output-stream.component';
 import { MarbleComponent } from './marble/marble.component';
 import { ReadonlyMarbleComponent } from './readonly-marble/readonly-marble.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,10 @@ import { ReadonlyMarbleComponent } from './readonly-marble/readonly-marble.compo
     OperationComponent,
     OutputStreamComponent,
     MarbleComponent,
-    ReadonlyMarbleComponent
+    ReadonlyMarbleComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

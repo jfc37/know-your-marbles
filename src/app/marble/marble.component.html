@@ -3,4 +3,6 @@
   class="empty-marble"
   (click)="emptyMarbleClicked()"
 ></button>
-<div *ngIf="value != null" class="marble">{{ value }}</div>
+<div *ngIf="value != null" class="marble">
+  <input type="number" name="value" id="value" [formControl]="formControl" />
+</div>

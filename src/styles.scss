@@ -76,6 +76,16 @@ body {
   background-size: cover;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 .center-content {
   display: grid;
   justify-items: center;
