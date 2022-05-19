@@ -26,8 +26,12 @@ export class MarbleComponent {
     return this.value === 'empty';
   }
 
+  public get isVoid(): boolean {
+    return this.value === 'void';
+  }
+
   public get isEmission(): boolean {
-    return !this.isTerminal && !this.isEmpty;
+    return typeof this.value == 'number';
   }
 
   constructor(public dialog: MatDialog) {}

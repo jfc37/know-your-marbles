@@ -21,6 +21,21 @@ export class InputStreamComponent {
   public valueUpdated(index: number, value: MarbleValue): void {
     const newValues = [...this.tickValues];
     newValues[index] = value;
+
+    // if updated value is terminal, set following ticks to be void
+    if (value === 'terminal') {
+      for (let i = index + 1; i < newValues.length; i++) {
+        newValues[i] = 'void';
+      }
+    }
+
+    // if previous value was terminal, set following ticks to be empty
+    if (this.tickValues[index] === 'terminal') {
+      for (let i = index + 1; i < newValues.length; i++) {
+        newValues[i] = 'empty';
+      }
+    }
+
     this.tickValuesUpdated.emit(newValues);
   }
 }

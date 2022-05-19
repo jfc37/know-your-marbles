@@ -11,14 +11,14 @@ export class AppComponent {
     'empty',
     'empty',
     'empty',
-    'terminal',
+    'empty',
     'empty',
   ];
   public outputTicks: MarbleValue[] = [
     'empty',
     'empty',
     'empty',
-    'terminal',
+    'empty',
     'empty',
   ];
 
