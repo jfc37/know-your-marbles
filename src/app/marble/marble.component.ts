@@ -40,7 +40,7 @@ export class MarbleComponent {
     this.dialog
       .open(MarbleValuePickerComponent)
       .afterClosed()
-      .subscribe((value) => this.valueUpdated.emit(value));
+      .subscribe((value) => value != null && this.valueUpdated.emit(value));
   }
 }
 
