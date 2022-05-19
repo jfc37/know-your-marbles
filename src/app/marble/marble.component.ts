@@ -4,11 +4,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'rx-marble',
@@ -16,11 +12,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./marble.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MarbleComponent implements OnInit, OnChanges {
+export class MarbleComponent {
   @Input() public value: MarbleValue = 'empty';
   @Output() public valueUpdated = new EventEmitter<MarbleValue>();
-
-  public formControl!: FormControl;
 
   public get isTerminal(): boolean {
     return this.value === 'terminal';
@@ -32,20 +26,6 @@ export class MarbleComponent implements OnInit, OnChanges {
 
   public get isEmission(): boolean {
     return !this.isTerminal && !this.isEmpty;
-  }
-
-  public ngOnInit(): void {
-    this.formControl = new FormControl(this.value, { updateOn: 'blur' });
-
-    this.formControl.valueChanges.subscribe((value) =>
-      this.valueUpdated.emit(value)
-    );
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && !changes['value'].isFirstChange()) {
-      this.formControl.setValue(changes['value'].currentValue);
-    }
   }
 
   public emptyMarbleClicked(): void {
