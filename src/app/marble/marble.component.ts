@@ -5,6 +5,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-picker.component';
 
 @Component({
   selector: 'rx-marble',
@@ -28,8 +30,13 @@ export class MarbleComponent {
     return !this.isTerminal && !this.isEmpty;
   }
 
-  public emptyMarbleClicked(): void {
-    this.valueUpdated.emit(0);
+  constructor(public dialog: MatDialog) {}
+
+  public openOptions(): void {
+    this.dialog
+      .open(MarbleValuePickerComponent)
+      .afterClosed()
+      .subscribe((value) => this.valueUpdated.emit(value));
   }
 }
 

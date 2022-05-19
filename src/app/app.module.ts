@@ -8,6 +8,9 @@ import { OutputStreamComponent } from './output-stream/output-stream.component';
 import { MarbleComponent } from './marble/marble.component';
 import { ReadonlyMarbleComponent } from './readonly-marble/readonly-marble.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-picker.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OutputStreamComponent,
     MarbleComponent,
     ReadonlyMarbleComponent,
+    MarbleValuePickerComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
