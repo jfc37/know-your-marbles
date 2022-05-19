@@ -25,5 +25,6 @@ export class AppComponent {
   public inputTicksChanged(newTicks: MarbleValue[]): void {
     console.log('ticks changed', newTicks);
     this.inputTicks = newTicks;
+    this.outputTicks = newTicks;
   }
 }

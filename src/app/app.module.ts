@@ -6,7 +6,6 @@ import { InputStreamComponent } from './input-stream/input-stream.component';
 import { OperationComponent } from './operation/operation.component';
 import { OutputStreamComponent } from './output-stream/output-stream.component';
 import { MarbleComponent } from './marble/marble.component';
-import { ReadonlyMarbleComponent } from './readonly-marble/readonly-marble.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -19,7 +18,6 @@ import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-p
     OperationComponent,
     OutputStreamComponent,
     MarbleComponent,
-    ReadonlyMarbleComponent,
     MarbleValuePickerComponent,
   ],
   imports: [

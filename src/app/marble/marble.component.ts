@@ -15,6 +15,7 @@ import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarbleComponent {
+  @Input() public readonly = false;
   @Input() public value: MarbleValue = 'empty';
   @Output() public valueUpdated = new EventEmitter<MarbleValue>();
 

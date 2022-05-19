@@ -9,6 +9,10 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .marble {
@@ -17,6 +21,7 @@ button {
   border: solid 1px black;
   height: 2.5rem;
   width: 2.5rem;
+  color: white;
 }
 
 .empty-marble {

@@ -1,6 +1,7 @@
 <div class="timeline">
-  <rx-readonly-marble
+  <rx-marble
     *ngFor="let value of tickValues"
+    [readonly]="true"
     [value]="value"
-  ></rx-readonly-marble>
+  ></rx-marble>
 </div>
