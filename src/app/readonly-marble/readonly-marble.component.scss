@@ -1,0 +1,22 @@
+:host {
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.marble {
+  border-radius: 100%;
+  background-color: hotpink;
+  border: solid 1px black;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.empty-marble {
+  border-radius: 100%;
+  background-color: black;
+  border: solid 1px black;
+  height: 0.5rem;
+  width: 0.5rem;
+}

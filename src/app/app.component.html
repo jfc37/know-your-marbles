@@ -1,5 +1,14 @@
-<section>
-  <rx-input-stream></rx-input-stream>
-  <rx-operation></rx-operation>
-  <rx-output-stream></rx-output-stream>
-</section>
+<main class="max-width-wrapper">
+  <section class="box center-content">
+    <rx-input-stream
+      [tickValues]="inputTicks"
+      (tickValuesUpdated)="inputTicksChanged($event)"
+    ></rx-input-stream>
+  </section>
+  <section class="box center-content">
+    <rx-operation></rx-operation>
+  </section>
+  <section class="box center-content">
+    <rx-output-stream [tickValues]="outputTicks"></rx-output-stream>
+  </section>
+</main>

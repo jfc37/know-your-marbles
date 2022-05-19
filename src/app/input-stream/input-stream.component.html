@@ -1,1 +1,7 @@
-<p>input-stream works!</p>
+<div class="timeline">
+  <rx-marble
+    *ngFor="let value of tickValues; let i = index"
+    [value]="value"
+    (valueUpdated)="valueUpdated(i, $event)"
+  ></rx-marble>
+</div>

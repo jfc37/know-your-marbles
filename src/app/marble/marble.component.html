@@ -1,0 +1,6 @@
+<button
+  *ngIf="value == null"
+  class="empty-marble"
+  (click)="emptyMarbleClicked()"
+></button>
+<div *ngIf="value != null" class="marble">{{ value }}</div>
