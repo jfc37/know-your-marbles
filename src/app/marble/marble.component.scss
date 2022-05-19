@@ -5,19 +5,18 @@
   align-items: center;
 }
 
+button {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .marble {
   border-radius: 100%;
   background-color: hotpink;
   border: solid 1px black;
   height: 2.5rem;
   width: 2.5rem;
-
-  input {
-    border-radius: 100%;
-    background-color: hotpink;
-    height: 100%;
-    width: 100%;
-  }
 }
 
 .empty-marble {
@@ -26,10 +25,6 @@
   border: solid 1px black;
   height: 0.75rem;
   width: 0.75rem;
-
-  padding: 0.2rem;
-
-  cursor: pointer;
 }
 
 .terminal {
