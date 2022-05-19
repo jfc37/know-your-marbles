@@ -1,2 +1,3 @@
-<div *ngIf="value == null" class="empty-marble"></div>
-<div *ngIf="value != null" class="marble">{{ value }}</div>
+<div *ngIf="isEmpty" class="empty-marble"></div>
+<div *ngIf="isTerminal" class="terminal"></div>
+<div *ngIf="isEmission" class="marble">{{ value }}</div>

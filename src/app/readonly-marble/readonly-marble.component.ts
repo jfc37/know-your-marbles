@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { MarbleValue } from '../marble/marble.component';
 
 @Component({
   selector: 'rx-readonly-marble',
@@ -7,5 +8,17 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReadonlyMarbleComponent {
-  @Input() public value: number | null = null;
+  @Input() public value!: MarbleValue;
+
+  public get isTerminal(): boolean {
+    return this.value === 'terminal';
+  }
+
+  public get isEmpty(): boolean {
+    return this.value === 'empty';
+  }
+
+  public get isEmission(): boolean {
+    return !this.isTerminal && !this.isEmpty;
+  }
 }

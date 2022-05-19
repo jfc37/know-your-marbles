@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { MarbleValue } from '../marble/marble.component';
 
 @Component({
   selector: 'rx-output-stream',
@@ -7,5 +8,5 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutputStreamComponent {
-  @Input() public tickValues: (number | null)[] = [];
+  @Input() public tickValues: MarbleValue[] = [];
 }

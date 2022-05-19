@@ -1,8 +1,13 @@
 <button
-  *ngIf="value == null"
+  *ngIf="isEmpty"
   class="empty-marble"
   (click)="emptyMarbleClicked()"
 ></button>
-<div *ngIf="value != null" class="marble">
+<button
+  *ngIf="isTerminal"
+  class="terminal"
+  (click)="emptyMarbleClicked()"
+></button>
+<div *ngIf="isEmission" class="marble">
   <input type="number" name="value" id="value" [formControl]="formControl" />
 </div>

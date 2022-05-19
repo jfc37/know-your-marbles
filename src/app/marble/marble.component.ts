@@ -17,10 +17,22 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarbleComponent implements OnInit, OnChanges {
-  @Input() public value: MarbleValue = null;
+  @Input() public value: MarbleValue = 'empty';
   @Output() public valueUpdated = new EventEmitter<MarbleValue>();
 
   public formControl!: FormControl;
+
+  public get isTerminal(): boolean {
+    return this.value === 'terminal';
+  }
+
+  public get isEmpty(): boolean {
+    return this.value === 'empty';
+  }
+
+  public get isEmission(): boolean {
+    return !this.isTerminal && !this.isEmpty;
+  }
 
   public ngOnInit(): void {
     this.formControl = new FormControl(this.value, { updateOn: 'blur' });
@@ -41,4 +53,4 @@ export class MarbleComponent implements OnInit, OnChanges {
   }
 }
 
-export type MarbleValue = number | null;
+export type MarbleValue = number | 'empty' | 'terminal' | 'void';

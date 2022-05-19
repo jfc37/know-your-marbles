@@ -7,8 +7,20 @@ import { MarbleValue } from './marble/marble.component';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public inputTicks: MarbleValue[] = [null, null, null, null, null];
-  public outputTicks: MarbleValue[] = [1, null, 0, null, 5];
+  public inputTicks: MarbleValue[] = [
+    'empty',
+    'empty',
+    'empty',
+    'terminal',
+    'empty',
+  ];
+  public outputTicks: MarbleValue[] = [
+    'empty',
+    'empty',
+    'empty',
+    'terminal',
+    'empty',
+  ];
 
   public inputTicksChanged(newTicks: MarbleValue[]): void {
     console.log('ticks changed', newTicks);
