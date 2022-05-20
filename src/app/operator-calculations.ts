@@ -1,4 +1,9 @@
-import { MarbleValue, Operations } from './types';
+import {
+  createEmptyMarble,
+  createTerminalMarble,
+  MarbleValue,
+  Operations,
+} from './types';
 
 export function getCalculationFn(
   operator: Operations
@@ -12,31 +17,27 @@ export function getCalculationFn(
   }
 }
 
-maxCalculation(['empty', 2, 'terminal']); /*?*/
-
 export function maxCalculation(input: MarbleValue[]): MarbleValue[] {
-  const terminalIndex = input.indexOf('terminal');
-  const hasNoTerminal = terminalIndex == -1;
-  if (hasNoTerminal) {
-    return ['empty', 'empty', 'empty', 'empty', 'empty'];
+  const terminalMarble = input.find((marble) => marble.terminal);
+  if (!terminalMarble) {
+    return input.map((_) => createEmptyMarble());
   }
+  const terminalIndex = input.indexOf(terminalMarble);
 
-  const values = input.filter((value) => typeof value == 'number');
   const max = input
-    .filter((value) => typeof value == 'number')
-    .sort((a, b) => (a > b ? -1 : 1))[0];
+    .map((marble) => marble.value)
+    .filter((value) => value != null)
+    .sort((a, b) => (a! > b! ? -1 : 1))[0];
 
   return [...Array(input.length)].map((_, index) => {
     if (index < terminalIndex) {
-      return 'empty';
-    } else if (index == terminalIndex) {
-      return max ?? 'terminal';
+      return createEmptyMarble();
     } else {
-      return 'void';
+      return createTerminalMarble(max);
     }
   });
 }
 
 export function minCalculation(input: MarbleValue[]): MarbleValue[] {
-  return ['empty', 'empty', 'empty', 'empty', 3];
+  return input.map((_) => createEmptyMarble());
 }

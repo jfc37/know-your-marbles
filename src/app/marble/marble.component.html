@@ -1,8 +1,7 @@
 <button (click)="openOptions()" [disabled]="readonly">
   <div *ngIf="isEmpty" class="empty-marble"></div>
   <div *ngIf="isTerminal" class="terminal"></div>
-  <div *ngIf="isVoid"></div>
   <div *ngIf="isEmission" class="marble center-content">
-    {{ value }}
+    {{ marble.value }}
   </div>
 </button>

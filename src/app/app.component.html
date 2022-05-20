@@ -1,8 +1,9 @@
 <main class="max-width-wrapper">
   <section class="box center-content">
     <rx-input-stream
-      [tickValues]="inputTicks"
-      (tickValuesUpdated)="inputTicksChanged($event)"
+      [marbles]="inputMarbles"
+      [numberOfTicks]="numberOfTick"
+      (marblesUpdated)="inputMarblesChanged($event)"
     ></rx-input-stream>
   </section>
   <section class="box center-content">
@@ -13,6 +14,6 @@
     ></rx-operation>
   </section>
   <section class="box center-content">
-    <rx-output-stream [tickValues]="outputTicks"></rx-output-stream>
+    <rx-output-stream [marbles]="outputMarbles"></rx-output-stream>
   </section>
 </main>

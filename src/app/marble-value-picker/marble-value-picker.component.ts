@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { createEmptyMarble } from '../types';
 
 @Component({
   selector: 'rx-marble-value-picker',
@@ -9,19 +10,18 @@ import { MatDialogRef } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarbleValuePickerComponent {
-  public formControl = new FormControl(1);
+  public formGroup = new FormGroup({
+    terminal: new FormControl(false),
+    value: new FormControl(1),
+  });
 
   constructor(public dialogRef: MatDialogRef<MarbleValuePickerComponent>) {}
 
-  public terminalClicked(): void {
-    this.dialogRef.close('terminal');
-  }
-
   public emptyClicked(): void {
-    this.dialogRef.close('empty');
+    this.dialogRef.close(createEmptyMarble());
   }
 
   public valueClicked(): void {
-    this.dialogRef.close(Number(this.formControl.value));
+    this.dialogRef.close(this.formGroup.value);
   }
 }

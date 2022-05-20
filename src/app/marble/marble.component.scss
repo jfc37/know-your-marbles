@@ -13,6 +13,7 @@ button {
   &:disabled {
     cursor: default;
   }
+  position: relative;
 }
 
 .marble {
@@ -34,6 +35,10 @@ button {
 
 .terminal {
   background-color: black;
-  height: 1.75rem;
+  height: 3.75rem;
   width: 0.2rem;
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  z-index: -1;
 }

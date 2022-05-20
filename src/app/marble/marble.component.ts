@@ -17,23 +17,19 @@ import { MarbleValue } from '../types';
 })
 export class MarbleComponent {
   @Input() public readonly = false;
-  @Input() public value: MarbleValue = 'empty';
-  @Output() public valueUpdated = new EventEmitter<MarbleValue>();
+  @Input() public marble!: MarbleValue;
+  @Output() public marbleUpdated = new EventEmitter<MarbleValue>();
 
   public get isTerminal(): boolean {
-    return this.value === 'terminal';
+    return this.marble.terminal;
   }
 
   public get isEmpty(): boolean {
-    return this.value === 'empty';
-  }
-
-  public get isVoid(): boolean {
-    return this.value === 'void';
+    return !this.marble.terminal && this.marble.value == null;
   }
 
   public get isEmission(): boolean {
-    return typeof this.value == 'number';
+    return this.marble.value != null;
   }
 
   constructor(public dialog: MatDialog) {}
@@ -42,6 +38,6 @@ export class MarbleComponent {
     this.dialog
       .open(MarbleValuePickerComponent)
       .afterClosed()
-      .subscribe((value) => value != null && this.valueUpdated.emit(value));
+      .subscribe((value) => value != null && this.marbleUpdated.emit(value));
   }
 }

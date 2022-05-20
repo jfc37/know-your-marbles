@@ -8,5 +8,5 @@ import { MarbleValue } from '../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutputStreamComponent {
-  @Input() public tickValues: MarbleValue[] = [];
+  @Input() public marbles: MarbleValue[] = [];
 }

@@ -1,7 +1,8 @@
 <div class="timeline">
   <rx-marble
-    *ngFor="let value of tickValues; let i = index"
-    [value]="value"
-    (valueUpdated)="valueUpdated(i, $event)"
+    *ngFor="let marble of marbles; let i = index"
+    [marble]="marble"
+    (marbleUpdated)="marbleUpdated(i, $event)"
   ></rx-marble>
+  <div *ngFor="let voidTick of voidTicks"></div>
 </div>

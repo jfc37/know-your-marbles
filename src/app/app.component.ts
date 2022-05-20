@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { getCalculationFn } from './operator-calculations';
-import { MarbleValue, Operations } from './types';
+import {
+  createEmptyMarble,
+  createTerminalMarble,
+  MarbleValue,
+  Operations,
+} from './types';
 
 @Component({
   selector: 'rx-root',
@@ -8,37 +13,38 @@ import { MarbleValue, Operations } from './types';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public inputTicks: MarbleValue[] = [
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
+  public inputMarbles: MarbleValue[] = [
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
   ];
-  public outputTicks: MarbleValue[] = [
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
+  public outputMarbles: MarbleValue[] = [
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
   ];
   public selectedOperation = Operations.Max;
 
   public operations: Operations[] = [Operations.Max, Operations.Min];
+  public numberOfTick = 5;
 
-  public inputTicksChanged(newTicks: MarbleValue[]): void {
-    this.inputTicks = newTicks;
-    this.recalculateOutputTicks();
+  public inputMarblesChanged(marbles: MarbleValue[]): void {
+    this.inputMarbles = marbles;
+    this.recalculateOutputMarbles();
   }
 
   public operationChanged(operation: Operations): void {
     this.selectedOperation = operation;
-    this.recalculateOutputTicks();
+    this.recalculateOutputMarbles();
   }
 
-  private recalculateOutputTicks(): void {
-    this.outputTicks = getCalculationFn(this.selectedOperation)(
-      this.inputTicks
+  private recalculateOutputMarbles(): void {
+    this.outputMarbles = getCalculationFn(this.selectedOperation)(
+      this.inputMarbles
     );
   }
 }

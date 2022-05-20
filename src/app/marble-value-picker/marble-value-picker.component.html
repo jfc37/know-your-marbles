@@ -1,4 +1,17 @@
-<button (click)="terminalClicked()">Terminal</button>
-<button (click)="emptyClicked()">Empty</button>
-<input type="number" name="value" id="value" [formControl]="formControl" />
-<button (click)="valueClicked()">Value</button>
+<form [formGroup]="formGroup">
+  <button (click)="emptyClicked()">Empty</button>
+  <fieldset>
+    <input
+      type="checkbox"
+      name="terminal"
+      id="terminal"
+      formControlName="terminal"
+    />
+    <label for="terminal">Terminal</label>
+  </fieldset>
+  <fieldset>
+    <input type="number" name="value" id="value" formControlName="value" />
+    <label for="terminal">Value</label>
+  </fieldset>
+  <button (click)="valueClicked()">Set</button>
+</form>

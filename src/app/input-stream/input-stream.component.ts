@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { MarbleValue } from '../types';
+import { createEmptyMarble, MarbleValue } from '../types';
 
 @Component({
   selector: 'rx-input-stream',
@@ -14,28 +14,32 @@ import { MarbleValue } from '../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputStreamComponent {
-  @Input() public tickValues: MarbleValue[] = [];
+  @Input() public marbles: MarbleValue[] = [];
+  @Input() public numberOfTicks!: number;
 
-  @Output() public tickValuesUpdated = new EventEmitter<MarbleValue[]>();
+  @Output() public marblesUpdated = new EventEmitter<MarbleValue[]>();
 
-  public valueUpdated(index: number, value: MarbleValue): void {
-    const newValues = [...this.tickValues];
-    newValues[index] = value;
+  public get voidTicks(): void[] {
+    const numberOfVoidTicks = this.numberOfTicks - this.marbles.length;
+    return [...Array(numberOfVoidTicks)];
+  }
 
-    // if updated value is terminal, set following ticks to be void
-    if (value === 'terminal') {
-      for (let i = index + 1; i < newValues.length; i++) {
-        newValues[i] = 'void';
-      }
+  public marbleUpdated(index: number, marble: MarbleValue): void {
+    let newValues = [...this.marbles];
+    newValues[index] = marble;
+
+    // if updated value is terminal, remove marbles that follow
+    if (marble.terminal) {
+      newValues = newValues.slice(0, index + 1);
+    } else if (this.marbles[index].terminal) {
+      newValues = [
+        ...newValues,
+        ...[...Array(this.numberOfTicks - index)].map(() =>
+          createEmptyMarble()
+        ),
+      ];
     }
-
-    // if previous value was terminal, set following ticks to be empty
-    if (this.tickValues[index] === 'terminal') {
-      for (let i = index + 1; i < newValues.length; i++) {
-        newValues[i] = 'empty';
-      }
-    }
-
-    this.tickValuesUpdated.emit(newValues);
+    console.log(newValues);
+    this.marblesUpdated.emit(newValues);
   }
 }
