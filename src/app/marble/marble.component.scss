@@ -14,12 +14,14 @@ button {
     cursor: default;
   }
   position: relative;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: inherit;
 }
 
 .marble {
   border-radius: 100%;
   background-color: hotpink;
-  border: solid 1px black;
   height: 2.5rem;
   width: 2.5rem;
   color: white;
@@ -29,8 +31,9 @@ button {
   border-radius: 100%;
   background-color: black;
   border: solid 1px black;
-  height: 0.75rem;
-  width: 0.75rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .terminal {
@@ -39,6 +42,6 @@ button {
   width: 0.2rem;
   position: absolute;
   top: -25%;
-  left: 50%;
+  left: calc(50% - 0.1rem);
   z-index: -1;
 }
