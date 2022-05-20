@@ -15,9 +15,9 @@ import {
 export class AppComponent {
   public inputMarbles: MarbleValue[] = [
     createEmptyMarble(),
-    { terminal: false, value: 2 },
-    createTerminalMarble(),
-    createTerminalMarble(1),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
     createEmptyMarble(),
   ];
   public outputMarbles: MarbleValue[] = [
