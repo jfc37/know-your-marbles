@@ -6,7 +6,11 @@
     ></rx-input-stream>
   </section>
   <section class="box center-content">
-    <rx-operation></rx-operation>
+    <rx-operation
+      [availableOperations]="operations"
+      [operation]="selectedOperation"
+      (operationSelected)="operationChanged($event)"
+    ></rx-operation>
   </section>
   <section class="box center-content">
     <rx-output-stream [tickValues]="outputTicks"></rx-output-stream>

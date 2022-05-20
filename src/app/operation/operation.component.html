@@ -1,4 +1,5 @@
-<select name="operation" id="opertation">
-  <option value="min">min</option>
-  <option value="max">max</option>
+<select name="operation" id="opertation" [formControl]="formControl">
+  <option *ngFor="let operation of availableOperations" [value]="operation">
+    {{ operation }}
+  </option>
 </select>
