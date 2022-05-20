@@ -39,7 +39,6 @@ export class InputStreamComponent {
         ),
       ];
     }
-    console.log(newValues);
     this.marblesUpdated.emit(newValues);
   }
 }

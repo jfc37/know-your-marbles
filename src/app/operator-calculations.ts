@@ -1,26 +1,37 @@
 import {
+  combineMarbles,
   createEmptyMarble,
   createTerminalMarble,
   MarbleValue,
   Operations,
 } from './types';
 
+const OPERATION_CALC_MAP = {
+  [Operations.First]: firstCalculation,
+  [Operations.Max]: maxCalculation,
+  [Operations.Merge]: mergeCalculation,
+  [Operations.Min]: minCalculation,
+  [Operations.TakeUntil]: takeUntilCalculation,
+};
+
 export function getCalculationFn(
   operator: Operations
 ): (...inputs: MarbleValue[][]) => MarbleValue[] {
-  switch (operator) {
-    case Operations.Max:
-      return maxCalculation;
+  return OPERATION_CALC_MAP[operator];
+}
 
-    case Operations.Min:
-      return minCalculation;
+export function mergeCalculation(
+  primaryInput: MarbleValue[],
+  secondaryInput: MarbleValue[]
+): MarbleValue[] {
+  const outputLength =
+    primaryInput.length > secondaryInput.length
+      ? primaryInput.length
+      : secondaryInput.length;
 
-    case Operations.First:
-      return firstCalculation;
-
-    case Operations.TakeUntil:
-      return takeUntilCalculation;
-  }
+  return [...Array(outputLength)].map((_, index) =>
+    combineMarbles(primaryInput[index], secondaryInput[index])
+  );
 }
 
 export function takeUntilCalculation(

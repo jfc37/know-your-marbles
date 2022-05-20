@@ -25,11 +25,17 @@ export class MarbleComponent {
   }
 
   public get isEmpty(): boolean {
-    return !this.marble.terminal && this.marble.value == null;
+    return !this.marble.terminal && !this.isEmission;
   }
 
   public get isEmission(): boolean {
-    return this.marble.value != null;
+    return Boolean(this.marbleValue);
+  }
+
+  public get marbleValue(): string {
+    return [this.marble.value, this.marble.secondaryValue]
+      .filter((value) => value != null)
+      .join('|');
   }
 
   constructor(public dialog: MatDialog) {}
