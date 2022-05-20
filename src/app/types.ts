@@ -1,4 +1,5 @@
 export enum Operations {
+  First = 'first',
   Min = 'min',
   Max = 'max',
 }

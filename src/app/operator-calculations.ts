@@ -14,7 +14,24 @@ export function getCalculationFn(
 
     case Operations.Min:
       return minCalculation;
+
+    case Operations.First:
+      return firstCalculation;
   }
+}
+
+export function firstCalculation(input: MarbleValue[]): MarbleValue[] {
+  const firstEmission = input.find((marble) => marble.value != null);
+
+  if (!firstEmission) {
+    return input.map(() => createEmptyMarble());
+  }
+
+  const firstEmissionIndex = input.indexOf(firstEmission);
+  return [
+    ...[...Array(firstEmissionIndex)].map(() => createEmptyMarble()),
+    createTerminalMarble(firstEmission.value),
+  ];
 }
 
 export function maxCalculation(input: MarbleValue[]): MarbleValue[] {

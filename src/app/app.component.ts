@@ -27,9 +27,9 @@ export class AppComponent {
     createEmptyMarble(),
     createEmptyMarble(),
   ];
-  public selectedOperation = Operations.Max;
+  public selectedOperation = Operations.First;
 
-  public operations: Operations[] = [Operations.Max, Operations.Min];
+  public operations: Operations[] = UNARY_OPERATORS;
   public numberOfTick = 5;
 
   public inputMarblesChanged(marbles: MarbleValue[]): void {
@@ -48,3 +48,5 @@ export class AppComponent {
     );
   }
 }
+
+const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
