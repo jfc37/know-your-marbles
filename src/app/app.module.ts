@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-picker.component';
+import { AddAdditionalInputStreamComponent } from './add-additional-input-stream/add-additional-input-stream.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-p
     OutputStreamComponent,
     MarbleComponent,
     MarbleValuePickerComponent,
+    AddAdditionalInputStreamComponent,
   ],
   imports: [
     BrowserModule,

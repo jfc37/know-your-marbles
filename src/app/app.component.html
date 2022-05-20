@@ -1,10 +1,23 @@
 <main class="max-width-wrapper">
   <section class="box center-content">
     <rx-input-stream
-      [marbles]="inputStream"
+      [marbles]="primaryInputStream"
       [numberOfTicks]="numberOfTick"
-      (marblesUpdated)="inputStreamChanged($event)"
+      (marblesUpdated)="primaryInputStreamChanged($event)"
     ></rx-input-stream>
+  </section>
+  <section class="box center-content" *ngIf="hasSecondaryInputStream">
+    <rx-input-stream
+      [marbles]="secondaryInputStream!"
+      [numberOfTicks]="numberOfTick"
+      (marblesUpdated)="secondaryInputStreamChanged($event)"
+    ></rx-input-stream>
+  </section>
+  <section class="box center-content">
+    <rx-add-additional-input-stream
+      [secondaryStreamEnabled]="hasSecondaryInputStream"
+      (toggleSecondaryStream)="toggleSecondaryInputStream()"
+    ></rx-add-additional-input-stream>
   </section>
   <section class="box center-content">
     <rx-operation

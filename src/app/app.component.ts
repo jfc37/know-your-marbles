@@ -8,27 +8,38 @@ import { createEmptyMarble, MarbleValue, Operations } from './types';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public inputStream: MarbleValue[] = [
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-  ];
-  public outputStream: MarbleValue[] = [
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-  ];
+  public primaryInputStream: MarbleValue[] = getInitialStream();
+  public secondaryInputStream?: MarbleValue[] = undefined;
+  public outputStream: MarbleValue[] = getInitialStream();
+
   public selectedOperation = Operations.First;
 
-  public operations: Operations[] = UNARY_OPERATORS;
+  public get hasSecondaryInputStream(): boolean {
+    return this.secondaryInputStream != null;
+  }
+
+  public get operations(): Operations[] {
+    return this.hasSecondaryInputStream ? BINARY_OPERATORS : UNARY_OPERATORS;
+  }
   public numberOfTick = 5;
 
-  public inputStreamChanged(marbles: MarbleValue[]): void {
-    this.inputStream = marbles;
+  public primaryInputStreamChanged(marbles: MarbleValue[]): void {
+    this.primaryInputStream = marbles;
+    this.recalculateOutputMarbles();
+  }
+
+  public secondaryInputStreamChanged(marbles: MarbleValue[]): void {
+    this.secondaryInputStream = marbles;
+    this.recalculateOutputMarbles();
+  }
+
+  public toggleSecondaryInputStream(): void {
+    if (this.secondaryInputStream) {
+      this.secondaryInputStream = undefined;
+    } else {
+      this.secondaryInputStream = getInitialStream();
+    }
+
     this.recalculateOutputMarbles();
   }
 
@@ -39,9 +50,20 @@ export class AppComponent {
 
   private recalculateOutputMarbles(): void {
     this.outputStream = getCalculationFn(this.selectedOperation)(
-      this.inputStream
+      this.primaryInputStream
     );
   }
 }
 
 const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
+const BINARY_OPERATORS = [Operations.First];
+
+function getInitialStream(): MarbleValue[] {
+  return [
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+    createEmptyMarble(),
+  ];
+}
