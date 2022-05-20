@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { MarbleValue } from '../marble/marble.component';
+import { MarbleValue } from '../types';
 
 @Component({
   selector: 'rx-input-stream',

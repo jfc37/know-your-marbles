@@ -12,6 +12,8 @@ export function getCalculationFn(
   }
 }
 
+maxCalculation(['empty', 2, 'terminal']); /*?*/
+
 export function maxCalculation(input: MarbleValue[]): MarbleValue[] {
   const terminalIndex = input.indexOf('terminal');
   const hasNoTerminal = terminalIndex == -1;
@@ -19,14 +21,16 @@ export function maxCalculation(input: MarbleValue[]): MarbleValue[] {
     return ['empty', 'empty', 'empty', 'empty', 'empty'];
   }
 
+  const values = input.filter((value) => typeof value == 'number');
   const max = input
     .filter((value) => typeof value == 'number')
     .sort((a, b) => (a > b ? -1 : 1))[0];
-  return Array(input.length).map((_, index) => {
+
+  return [...Array(input.length)].map((_, index) => {
     if (index < terminalIndex) {
       return 'empty';
     } else if (index == terminalIndex) {
-      return max;
+      return max ?? 'terminal';
     } else {
       return 'void';
     }
