@@ -34,7 +34,7 @@ export class InputStreamComponent {
     } else if (this.marbles[index].terminal) {
       newValues = [
         ...newValues,
-        ...[...Array(this.numberOfTicks - index)].map(() =>
+        ...[...Array(this.numberOfTicks - index - 1)].map(() =>
           createEmptyMarble()
         ),
       ];
