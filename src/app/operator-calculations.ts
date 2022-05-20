@@ -17,7 +17,29 @@ export function getCalculationFn(
 
     case Operations.First:
       return firstCalculation;
+
+    case Operations.TakeUntil:
+      return takeUntilCalculation;
   }
+}
+
+export function takeUntilCalculation(
+  primaryInput: MarbleValue[],
+  secondaryInput: MarbleValue[]
+): MarbleValue[] {
+  const secondaryFirstEmission = secondaryInput.find(
+    (marble) => marble.value != null
+  );
+
+  if (!secondaryFirstEmission) {
+    return primaryInput;
+  }
+
+  const terminalIndex = secondaryInput.indexOf(secondaryFirstEmission);
+  return [
+    ...primaryInput.slice(0, terminalIndex),
+    createTerminalMarble(primaryInput[terminalIndex].value),
+  ];
 }
 
 export function firstCalculation(input: MarbleValue[]): MarbleValue[] {

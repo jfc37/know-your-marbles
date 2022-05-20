@@ -13,6 +13,7 @@ export class AppComponent {
   public outputStream: MarbleValue[] = getInitialStream();
 
   public selectedOperation = Operations.First;
+  public numberOfTick = 5;
 
   public get hasSecondaryInputStream(): boolean {
     return this.secondaryInputStream != null;
@@ -21,7 +22,6 @@ export class AppComponent {
   public get operations(): Operations[] {
     return this.hasSecondaryInputStream ? BINARY_OPERATORS : UNARY_OPERATORS;
   }
-  public numberOfTick = 5;
 
   public primaryInputStreamChanged(marbles: MarbleValue[]): void {
     this.primaryInputStream = marbles;
@@ -40,7 +40,7 @@ export class AppComponent {
       this.secondaryInputStream = getInitialStream();
     }
 
-    this.recalculateOutputMarbles();
+    this.operationChanged(this.operations[0]);
   }
 
   public operationChanged(operation: Operations): void {
@@ -50,13 +50,14 @@ export class AppComponent {
 
   private recalculateOutputMarbles(): void {
     this.outputStream = getCalculationFn(this.selectedOperation)(
-      this.primaryInputStream
+      this.primaryInputStream,
+      this.secondaryInputStream!
     );
   }
 }
 
 const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
-const BINARY_OPERATORS = [Operations.First];
+const BINARY_OPERATORS = [Operations.TakeUntil];
 
 function getInitialStream(): MarbleValue[] {
   return [

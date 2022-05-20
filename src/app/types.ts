@@ -2,6 +2,7 @@ export enum Operations {
   First = 'first',
   Min = 'min',
   Max = 'max',
+  TakeUntil = 'take until',
 }
 export interface MarbleValue {
   value: number | null;
