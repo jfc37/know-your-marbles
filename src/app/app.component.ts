@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MarbleValue } from './marble/marble.component';
-import { Operations } from './operation/operation.component';
+import { getCalculationFn } from './operator-calculations';
+import { MarbleValue, Operations } from './types';
 
 @Component({
   selector: 'rx-root',
@@ -41,24 +41,4 @@ export class AppComponent {
       this.inputTicks
     );
   }
-}
-
-function getCalculationFn(
-  operator: Operations
-): (...inputs: MarbleValue[][]) => MarbleValue[] {
-  switch (operator) {
-    case Operations.Max:
-      return maxCalculation;
-
-    case Operations.Min:
-      return minCalculation;
-  }
-}
-
-function maxCalculation(input: MarbleValue[]): MarbleValue[] {
-  return ['empty', 'empty', 'empty', 'empty', 5];
-}
-
-function minCalculation(input: MarbleValue[]): MarbleValue[] {
-  return ['empty', 'empty', 'empty', 'empty', 3];
 }

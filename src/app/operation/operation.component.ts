@@ -9,6 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Operations } from '../types';
 
 @Component({
   selector: 'rx-operation',
@@ -37,9 +38,4 @@ export class OperationComponent implements OnInit, OnChanges {
       this.formControl.setValue(changes['operation'].currentValue);
     }
   }
-}
-
-export enum Operations {
-  Min = 'min',
-  Max = 'max',
 }

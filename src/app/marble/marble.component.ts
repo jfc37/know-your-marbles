@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-picker.component';
+import { MarbleValue } from '../types';
 
 @Component({
   selector: 'rx-marble',
@@ -44,5 +45,3 @@ export class MarbleComponent {
       .subscribe((value) => value != null && this.valueUpdated.emit(value));
   }
 }
-
-export type MarbleValue = number | 'empty' | 'terminal' | 'void';
