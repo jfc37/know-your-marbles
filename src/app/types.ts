@@ -10,6 +10,10 @@ export interface MarbleValue {
   secondaryValue?: number;
   terminal: boolean;
 }
+export interface MarbleDiagram {
+  diagram: string;
+  values: { [key: string]: number };
+}
 
 export function createEmptyMarble(): MarbleValue {
   return {
@@ -22,16 +26,5 @@ export function createTerminalMarble(value: number | null = null): MarbleValue {
   return {
     terminal: true,
     value,
-  };
-}
-
-export function combineMarbles(
-  marbleOne?: MarbleValue,
-  marbleTwo?: MarbleValue
-): MarbleValue {
-  return {
-    terminal: false,
-    value: marbleOne?.value ?? null,
-    secondaryValue: marbleTwo?.value ?? undefined,
   };
 }

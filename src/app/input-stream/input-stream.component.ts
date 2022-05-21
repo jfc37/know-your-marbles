@@ -4,8 +4,12 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
-import { createEmptyMarble, MarbleValue } from '../types';
+import { diagramToMarbles, marblesToDiagram } from '../conversions';
+import { createEmptyMarble, MarbleDiagram, MarbleValue } from '../types';
 
 @Component({
   selector: 'rx-input-stream',
@@ -13,11 +17,23 @@ import { createEmptyMarble, MarbleValue } from '../types';
   styleUrls: ['./input-stream.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputStreamComponent {
-  @Input() public marbles: MarbleValue[] = [];
+export class InputStreamComponent implements OnInit, OnChanges {
+  @Input() public diagram!: MarbleDiagram;
   @Input() public numberOfTicks!: number;
 
-  @Output() public marblesUpdated = new EventEmitter<MarbleValue[]>();
+  @Output() public diagramUpdated = new EventEmitter<MarbleDiagram>();
+
+  public marbles: MarbleValue[] = [];
+
+  public ngOnInit(): void {
+    this.marbles = diagramToMarbles(this.diagram);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['diagram'] && !changes['diagram'].isFirstChange()) {
+      this.marbles = diagramToMarbles(changes['diagram'].currentValue);
+    }
+  }
 
   public get voidTicks(): void[] {
     const numberOfVoidTicks = this.numberOfTicks - this.marbles.length;
@@ -39,6 +55,11 @@ export class InputStreamComponent {
         ),
       ];
     }
-    this.marblesUpdated.emit(newValues);
+
+    const updatedDiagram = marblesToDiagram(newValues);
+
+    console.error('xxx', newValues, updatedDiagram);
+
+    this.diagramUpdated.emit(updatedDiagram);
   }
 }

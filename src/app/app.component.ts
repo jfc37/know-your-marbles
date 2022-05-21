@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { getCalculationFn } from './operator-calculations';
-import { createEmptyMarble, MarbleValue, Operations } from './types';
+import { MarbleDiagram, Operations } from './types';
 
 @Component({
   selector: 'rx-root',
@@ -8,36 +8,36 @@ import { createEmptyMarble, MarbleValue, Operations } from './types';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public primaryInputStream: MarbleValue[] = getInitialStream();
-  public secondaryInputStream?: MarbleValue[] = undefined;
-  public outputStream: MarbleValue[] = getInitialStream();
+  public primaryInputDiagram: MarbleDiagram = getInitialMarbleDiagram();
+  public secondaryInputDiagram?: MarbleDiagram = undefined;
+  public outputDiagram: MarbleDiagram = getInitialMarbleDiagram();
 
   public selectedOperation = Operations.First;
   public numberOfTick = 5;
 
-  public get hasSecondaryInputStream(): boolean {
-    return this.secondaryInputStream != null;
+  public get hasSecondaryInputDiagram(): boolean {
+    return this.secondaryInputDiagram != null;
   }
 
   public get operations(): Operations[] {
-    return this.hasSecondaryInputStream ? BINARY_OPERATORS : UNARY_OPERATORS;
+    return this.hasSecondaryInputDiagram ? BINARY_OPERATORS : UNARY_OPERATORS;
   }
 
-  public primaryInputStreamChanged(marbles: MarbleValue[]): void {
-    this.primaryInputStream = marbles;
+  public primaryInputDiagramChanged(diagram: MarbleDiagram): void {
+    this.primaryInputDiagram = diagram;
     this.recalculateOutputMarbles();
   }
 
-  public secondaryInputStreamChanged(marbles: MarbleValue[]): void {
-    this.secondaryInputStream = marbles;
+  public secondaryInputDiagramChanged(diagram: MarbleDiagram): void {
+    this.secondaryInputDiagram = diagram;
     this.recalculateOutputMarbles();
   }
 
-  public toggleSecondaryInputStream(): void {
-    if (this.secondaryInputStream) {
-      this.secondaryInputStream = undefined;
+  public toggleSecondaryInputDiagram(): void {
+    if (this.secondaryInputDiagram) {
+      this.secondaryInputDiagram = undefined;
     } else {
-      this.secondaryInputStream = getInitialStream();
+      this.secondaryInputDiagram = getInitialMarbleDiagram();
     }
 
     this.operationChanged(this.operations[0]);
@@ -49,9 +49,9 @@ export class AppComponent {
   }
 
   private recalculateOutputMarbles(): void {
-    this.outputStream = getCalculationFn(this.selectedOperation)(
-      this.primaryInputStream,
-      this.secondaryInputStream!
+    this.outputDiagram = getCalculationFn(this.selectedOperation)(
+      this.primaryInputDiagram,
+      this.secondaryInputDiagram!
     );
   }
 }
@@ -59,12 +59,9 @@ export class AppComponent {
 const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
 const BINARY_OPERATORS = [Operations.Merge, Operations.TakeUntil];
 
-function getInitialStream(): MarbleValue[] {
-  return [
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-    createEmptyMarble(),
-  ];
+function getInitialMarbleDiagram(): MarbleDiagram {
+  return {
+    diagram: '-----',
+    values: {},
+  };
 }

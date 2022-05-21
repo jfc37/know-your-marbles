@@ -13,13 +13,13 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddAdditionalInputStreamComponent {
-  @Input() public secondaryStreamEnabled!: boolean;
+  @Input() public secondaryDiagramEnabled!: boolean;
 
-  @Output() public toggleSecondaryStream = new EventEmitter<void>();
+  @Output() public toggleSecondaryDiagram = new EventEmitter<void>();
 
   public get buttonText(): string {
-    return this.secondaryStreamEnabled
-      ? 'Remove second stream'
-      : 'Add second stream';
+    return this.secondaryDiagramEnabled
+      ? 'Remove second diagram'
+      : 'Add second diagram';
   }
 }

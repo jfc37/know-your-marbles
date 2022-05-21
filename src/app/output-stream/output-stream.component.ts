@@ -1,5 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { MarbleValue } from '../types';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { diagramToMarbles } from '../conversions';
+import { MarbleDiagram, MarbleValue } from '../types';
 
 @Component({
   selector: 'rx-output-stream',
@@ -7,9 +15,21 @@ import { MarbleValue } from '../types';
   styleUrls: ['./output-stream.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OutputStreamComponent {
-  @Input() public marbles!: MarbleValue[];
+export class OutputStreamComponent implements OnInit, OnChanges {
+  @Input() public diagram!: MarbleDiagram;
   @Input() public numberOfTicks!: number;
+
+  public marbles!: MarbleValue[];
+
+  public ngOnInit(): void {
+    this.marbles = diagramToMarbles(this.diagram);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['diagram'] && !changes['diagram'].isFirstChange()) {
+      this.marbles = diagramToMarbles(changes['diagram'].currentValue);
+    }
+  }
 
   public get voidTicks(): void[] {
     const numberOfVoidTicks = this.numberOfTicks - this.marbles.length;

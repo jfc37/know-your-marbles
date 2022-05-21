@@ -1,22 +1,22 @@
 <main class="max-width-wrapper">
   <section class="box center-content">
     <rx-input-stream
-      [marbles]="primaryInputStream"
+      [diagram]="primaryInputDiagram"
       [numberOfTicks]="numberOfTick"
-      (marblesUpdated)="primaryInputStreamChanged($event)"
+      (diagramUpdated)="primaryInputDiagramChanged($event)"
     ></rx-input-stream>
   </section>
-  <section class="box center-content" *ngIf="hasSecondaryInputStream">
+  <section class="box center-content" *ngIf="hasSecondaryInputDiagram">
     <rx-input-stream
-      [marbles]="secondaryInputStream!"
+      [diagram]="secondaryInputDiagram!"
       [numberOfTicks]="numberOfTick"
-      (marblesUpdated)="secondaryInputStreamChanged($event)"
+      (diagramUpdated)="secondaryInputDiagramChanged($event)"
     ></rx-input-stream>
   </section>
   <section class="box center-content">
     <rx-add-additional-input-stream
-      [secondaryStreamEnabled]="hasSecondaryInputStream"
-      (toggleSecondaryStream)="toggleSecondaryInputStream()"
+      [secondaryDiagramEnabled]="hasSecondaryInputDiagram"
+      (toggleSecondaryDiagram)="toggleSecondaryInputDiagram()"
     ></rx-add-additional-input-stream>
   </section>
   <section class="box center-content">
@@ -28,7 +28,7 @@
   </section>
   <section class="box center-content">
     <rx-output-stream
-      [marbles]="outputStream"
+      [diagram]="outputDiagram"
       [numberOfTicks]="numberOfTick"
     ></rx-output-stream>
   </section>
