@@ -1,3 +1,4 @@
+import { diagramToMarbles } from './conversions';
 import {
   createEmptyMarble,
   createTerminalMarble,
@@ -43,5 +44,21 @@ export function maxCalculation(input: MarbleDiagram): MarbleDiagram {
 }
 
 export function minCalculation(input: MarbleDiagram): MarbleDiagram {
-  return input;
+  const marbles = diagramToMarbles(input);
+  const completion = marbles.find((marble) => marble.terminal);
+
+  if (!completion) {
+    return { diagram: marbles.map((_) => '-').join(''), values: {} };
+  }
+
+  const min = Object.values(input.values).sort((a, b) => (a < b ? -1 : 1))[0];
+  const completionTick = marbles.indexOf(completion);
+  return {
+    diagram: [[...Array(completionTick)].map((_) => '-').join(''), '(a|)'].join(
+      ''
+    ),
+    values: {
+      a: min,
+    },
+  };
 }
