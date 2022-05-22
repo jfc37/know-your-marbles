@@ -1,40 +1,65 @@
-import { createEmptyMarble, MarbleDiagram, MarbleValue } from './types';
+import {
+  createEmptyMarble,
+  createTerminalMarble,
+  MarbleDiagram,
+  MarbleValue,
+} from './types';
+
+enum MarbleSymbol {
+  Blank = '-',
+  Completion = '|',
+  Group = '(',
+}
 
 export function diagramToMarbles(diagram: MarbleDiagram): MarbleValue[] {
   const marbles: MarbleValue[] = [];
   let index = 0;
   while (index < diagram.diagram.length) {
-    if (diagram.diagram[index] === '-') {
-      marbles.push(createEmptyMarble());
-      index++;
-    } else if (diagram.diagram[index] === '(') {
-      index++;
-      const marbleForCurrentTick = createEmptyMarble();
-      marbles.push(marbleForCurrentTick);
-      while (diagram.diagram[index] != ')') {
-        if (diagram.diagram[index] == '|') {
-          marbleForCurrentTick.terminal = true;
-        } else if (marbleForCurrentTick.value == null) {
-          marbleForCurrentTick.value = diagram.values[diagram.diagram[index]];
-        } else {
-          marbleForCurrentTick.secondaryValue =
-            diagram.values[diagram.diagram[index]];
-        }
-        index++;
-      }
-      index++;
-    } else {
-      console.error(
-        'unexpected value in diagram',
-        diagram.diagram,
-        index,
-        diagram.diagram[index]
-      );
-      index++;
-    }
+    const result = currentTickToMarble(diagram, index);
+    marbles.push(result.marble);
+    index = result.nextTickIndex;
   }
 
   return marbles;
+}
+
+function currentTickToMarble(
+  diagram: MarbleDiagram,
+  index: number
+): { marble: MarbleValue; nextTickIndex: number } {
+  const startOfTick = diagram.diagram[index];
+  if (startOfTick == MarbleSymbol.Blank) {
+    return {
+      marble: createEmptyMarble(),
+      nextTickIndex: index + 1,
+    };
+  } else if (startOfTick == MarbleSymbol.Completion) {
+    return {
+      marble: createTerminalMarble(),
+      nextTickIndex: index + 1,
+    };
+  } else if (startOfTick == MarbleSymbol.Group) {
+    const openingIndex = index;
+    const closingIndex = diagram.diagram.indexOf(')', index);
+    const groupLength = closingIndex - openingIndex;
+    const values = diagram.diagram.substring(openingIndex + 1, groupLength);
+    return {
+      marble: {
+        terminal: values.includes('|'),
+        value: diagram.values[values[0]],
+        secondaryValue: diagram.values[values[1]],
+      },
+      nextTickIndex: closingIndex + 1,
+    };
+  } else {
+    return {
+      marble: {
+        terminal: false,
+        value: diagram.values[diagram.diagram[index]],
+      },
+      nextTickIndex: index + 1,
+    };
+  }
 }
 
 export function marblesToDiagram(marbles: MarbleValue[]): MarbleDiagram {
@@ -73,16 +98,22 @@ export function marblesToDiagram(marbles: MarbleValue[]): MarbleDiagram {
   };
 
   marbles.forEach((marble) => {
-    if (!marble.value) {
-      if (!marble.terminal) {
-        marbleDiagram.diagram = marbleDiagram.diagram + '-';
-      } else {
-        marbleDiagram.diagram = marbleDiagram.diagram + '(|)';
-      }
+    if (!marble.value && !marble.terminal) {
+      marbleDiagram.diagram = marbleDiagram.diagram + '-';
+    } else if (!marble.value && marble.terminal) {
+      marbleDiagram.diagram = marbleDiagram.diagram + '|';
+    } else if (
+      marble.value &&
+      marble.secondaryValue == null &&
+      !marble.terminal
+    ) {
+      marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
+      marbleDiagram.values[keys[keyIndex]] = marble.value;
+      keyIndex++;
     } else {
       marbleDiagram.diagram = marbleDiagram.diagram + '(';
       marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-      marbleDiagram.values[keys[keyIndex]] = marble.value;
+      marbleDiagram.values[keys[keyIndex]] = marble.value!;
       keyIndex++;
 
       if (marble.secondaryValue != null) {
@@ -97,6 +128,31 @@ export function marblesToDiagram(marbles: MarbleValue[]): MarbleDiagram {
 
       marbleDiagram.diagram = marbleDiagram.diagram + ')';
     }
+
+    // if (!marble.value) {
+    //   if (!marble.terminal) {
+    //     marbleDiagram.diagram = marbleDiagram.diagram + '-';
+    //   } else {
+    //     marbleDiagram.diagram = marbleDiagram.diagram + '(|)';
+    //   }
+    // } else {
+    //   marbleDiagram.diagram = marbleDiagram.diagram + '(';
+    //   marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
+    //   marbleDiagram.values[keys[keyIndex]] = marble.value;
+    //   keyIndex++;
+
+    //   if (marble.secondaryValue != null) {
+    //     marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
+    //     marbleDiagram.values[keys[keyIndex]] = marble.secondaryValue;
+    //     keyIndex++;
+    //   }
+
+    //   if (marble.terminal) {
+    //     marbleDiagram.diagram = marbleDiagram.diagram + '|';
+    //   }
+
+    //   marbleDiagram.diagram = marbleDiagram.diagram + ')';
+    // }
   });
 
   return marbleDiagram;

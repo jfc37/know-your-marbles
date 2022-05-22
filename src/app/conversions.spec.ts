@@ -7,7 +7,7 @@ import {
 } from './types';
 
 describe('diagramToMarbles', () => {
-  it('should map "-" to empty marble', () => {
+  it('should map "-"', () => {
     const marbleDiagram: MarbleDiagram = {
       diagram: '-',
       values: {},
@@ -20,9 +20,9 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeFalse();
   });
 
-  it('should map "(|)" to terminal marble', () => {
+  it('should map "|"', () => {
     const marbleDiagram: MarbleDiagram = {
-      diagram: '(|)',
+      diagram: '|',
       values: {},
     };
 
@@ -33,9 +33,9 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeTrue();
   });
 
-  it('should map "(a)" to marble with value', () => {
+  it('should map "a"', () => {
     const marbleDiagram: MarbleDiagram = {
-      diagram: '(a)',
+      diagram: 'a',
       values: { a: 1 },
     };
 
@@ -46,7 +46,7 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeFalse();
   });
 
-  it('should map "(a|)" to marble with value and completion', () => {
+  it('should map (a|)', () => {
     const marbleDiagram: MarbleDiagram = {
       diagram: '(a|)',
       values: { a: 1 },
@@ -59,7 +59,7 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeTrue();
   });
 
-  it('should map "(ab)" to marble with multiple values', () => {
+  it('should map (ab)', () => {
     const marbleDiagram: MarbleDiagram = {
       diagram: '(ab)',
       values: { a: 1, b: 2 },
@@ -73,7 +73,7 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeFalse();
   });
 
-  it('should map "(ab|)" to marble with multiple values and completion', () => {
+  it('should map (ab|)', () => {
     const marbleDiagram: MarbleDiagram = {
       diagram: '(ab|)',
       values: { a: 1, b: 2 },
@@ -98,25 +98,25 @@ describe('marblesToDiagram', () => {
     expect(diagram.values).toEqual({});
   });
 
-  it('should map completion marble with no value to "(|)"', () => {
+  it('should map completion marble with no value to "|"', () => {
     const marbles = [createTerminalMarble()];
 
     const diagram = marblesToDiagram(marbles);
 
-    expect(diagram.diagram).toBe('(|)');
+    expect(diagram.diagram).toBe('|');
     expect(diagram.values).toEqual({});
   });
 
-  it('should map marble with single value to "(a)"', () => {
+  it('should map marble with single value to "a"', () => {
     const marbles: MarbleValue[] = [{ value: 1, terminal: false }];
 
     const diagram = marblesToDiagram(marbles);
 
-    expect(diagram.diagram).toBe('(a)');
+    expect(diagram.diagram).toBe('a');
     expect(diagram.values).toEqual({ a: 1 });
   });
 
-  it('should map marble with single value with completion to "(a|)"', () => {
+  it('should map marble with single value and completion to "(a|)"', () => {
     const marbles: MarbleValue[] = [{ value: 1, terminal: true }];
 
     const diagram = marblesToDiagram(marbles);
