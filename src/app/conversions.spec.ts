@@ -59,7 +59,7 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].terminal).toBeTrue();
   });
 
-  fit('should map --(a|)', () => {
+  it('should map --(a|)', () => {
     const marbleDiagram: MarbleDiagram = {
       diagram: '--(a|)',
       values: { a: 1 },
