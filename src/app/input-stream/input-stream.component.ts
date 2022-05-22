@@ -58,8 +58,6 @@ export class InputStreamComponent implements OnInit, OnChanges {
 
     const updatedDiagram = marblesToDiagram(newValues);
 
-    console.error('xxx', newValues, updatedDiagram);
-
     this.diagramUpdated.emit(updatedDiagram);
   }
 }

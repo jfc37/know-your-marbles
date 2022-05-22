@@ -41,8 +41,8 @@ function currentTickToMarble(
   } else if (startOfTick == MarbleSymbol.Group) {
     const openingIndex = index;
     const closingIndex = diagram.diagram.indexOf(')', index);
-    const groupLength = closingIndex - openingIndex;
-    const values = diagram.diagram.substring(openingIndex + 1, groupLength);
+    diagram.diagram.substring(openingIndex + 1, closingIndex);
+    const values = diagram.diagram.substring(openingIndex + 1, closingIndex);
     return {
       marble: {
         terminal: values.includes('|'),
