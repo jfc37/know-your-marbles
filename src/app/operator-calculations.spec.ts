@@ -1,5 +1,14 @@
 import { cold } from 'jasmine-marbles';
-import { first, max, min, OperatorFunction, takeUntil } from 'rxjs';
+import {
+  first,
+  max,
+  merge,
+  min,
+  MonoTypeOperatorFunction,
+  ObservableInput,
+  OperatorFunction,
+  takeUntil,
+} from 'rxjs';
 import { getCalculationFn } from './operator-calculations';
 import { MarbleDiagram, Operations } from './types';
 
@@ -148,6 +157,53 @@ describe('min', () => {
   });
 });
 
+describe('take until', () => {
+  it('check "abcde" | "----" has same output as rxjs', () => {
+    binaryCompareWithRxjs(
+      {
+        diagram: 'abcde',
+        values: { a: 1, b: 2, c: 3, d: 4, e: 5 },
+      },
+      Operations.TakeUntil,
+      {
+        diagram: '----',
+        values: {},
+      },
+      takeUntil
+    );
+  });
+
+  it('check "abcde" | "--|" has same output as rxjs', () => {
+    binaryCompareWithRxjs(
+      {
+        diagram: 'abcde',
+        values: { a: 1, b: 2, c: 3, d: 4, e: 5 },
+      },
+      Operations.TakeUntil,
+      {
+        diagram: '--|',
+        values: {},
+      },
+      takeUntil
+    );
+  });
+
+  it('check "abcde" | "--f-g" has same output as rxjs', () => {
+    binaryCompareWithRxjs(
+      {
+        diagram: 'abcde',
+        values: { a: 1, b: 2, c: 3, d: 4, e: 5 },
+      },
+      Operations.TakeUntil,
+      {
+        diagram: '--f-g',
+        values: { f: 1, g: 1 },
+      },
+      takeUntil
+    );
+  });
+});
+
 function compareWithRxjs<TInput, TOutput>(
   marbleDiagram: MarbleDiagram,
   operation: Operations,
@@ -157,6 +213,33 @@ function compareWithRxjs<TInput, TOutput>(
   const realOutput = realInput.pipe(rxjsOperation);
 
   const simulatedOutput = getCalculationFn(operation)(marbleDiagram);
+  expect(realOutput).toBeObservable(
+    cold(simulatedOutput.diagram, simulatedOutput.values)
+  );
+}
+
+function binaryCompareWithRxjs<TOutput>(
+  primaryMarbleDiagram: MarbleDiagram,
+  operation: Operations,
+  secondaryMarbleDiagram: MarbleDiagram,
+  rxjsOperation: (
+    notifier: ObservableInput<any>
+  ) => MonoTypeOperatorFunction<TOutput>
+): void {
+  const realPrimaryInput = cold(
+    primaryMarbleDiagram.diagram,
+    primaryMarbleDiagram.values
+  );
+  const realSecondaryInput = cold(
+    secondaryMarbleDiagram.diagram,
+    secondaryMarbleDiagram.values
+  );
+  const realOutput = realPrimaryInput.pipe(rxjsOperation(realSecondaryInput));
+
+  const simulatedOutput = getCalculationFn(operation)(
+    primaryMarbleDiagram,
+    secondaryMarbleDiagram
+  );
   expect(realOutput).toBeObservable(
     cold(simulatedOutput.diagram, simulatedOutput.values)
   );

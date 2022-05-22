@@ -1,4 +1,4 @@
-import { diagramToMarbles } from './conversions';
+import { diagramToMarbles, marblesToDiagram } from './conversions';
 import { MarbleDiagram, MarbleValue, Operations } from './types';
 
 const OPERATION_CALC_MAP = {
@@ -26,7 +26,18 @@ export function takeUntilCalculation(
   primaryInput: MarbleDiagram,
   secondaryInput: MarbleDiagram
 ): MarbleDiagram {
-  return primaryInput;
+  if (neverEmits(secondaryInput)) {
+    return primaryInput;
+  }
+
+  const secondaryMarbles = diagramToMarbles(secondaryInput);
+  const firstEmission = getFirstEmissionTick(secondaryMarbles);
+
+  const primaryMarbles = diagramToMarbles(primaryInput);
+  const truncatedPrimaryMarbles = primaryMarbles.slice(0, firstEmission);
+  const truncatedPrimaryDiagram = marblesToDiagram(truncatedPrimaryMarbles);
+  truncatedPrimaryDiagram.diagram = truncatedPrimaryDiagram.diagram + '|';
+  return truncatedPrimaryDiagram;
 }
 
 export function firstCalculation(input: MarbleDiagram): MarbleDiagram {
