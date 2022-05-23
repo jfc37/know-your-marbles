@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Marble } from '../types';
+import { Marble } from '../logic/marble';
 
 @Component({
   selector: 'rx-marble-value-picker',

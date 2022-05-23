@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { getCalculationFn } from './operator-calculations';
-import { Diagram, Operations } from './types';
+import { Diagram } from './logic/diagram';
+import { getOperationFn, Operations } from './logic/operation-map';
 
 @Component({
   selector: 'rx-root',
@@ -49,7 +49,7 @@ export class AppComponent {
   }
 
   private recalculateOutputMarbles(): void {
-    this.outputDiagram = getCalculationFn(this.selectedOperation)(
+    this.outputDiagram = getOperationFn(this.selectedOperation)(
       this.primaryInputDiagram,
       this.secondaryInputDiagram!
     );

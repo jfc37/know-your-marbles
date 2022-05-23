@@ -6,8 +6,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Marble } from '../logic/marble';
 import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-picker.component';
-import { Marble } from '../types';
 
 @Component({
   selector: 'rx-marble',

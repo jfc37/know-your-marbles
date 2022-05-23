@@ -6,7 +6,8 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Diagram, Marble } from '../types';
+import { Diagram } from '../logic/diagram';
+import { Marble } from '../logic/marble';
 
 @Component({
   selector: 'rx-output-stream',

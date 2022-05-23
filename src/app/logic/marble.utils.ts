@@ -1,4 +1,5 @@
-import { Diagram, Marble } from './types';
+import { Diagram } from './diagram';
+import { Marble } from './marble';
 
 export function marblesToDiagram(marbles: Marble[]): Diagram {
   let keyIndex = 0;

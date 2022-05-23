@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Operations } from '../types';
+import { Operations } from '../logic/operation-map';
 
 @Component({
   selector: 'rx-operation',

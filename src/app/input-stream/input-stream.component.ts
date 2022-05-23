@@ -8,8 +8,9 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { marblesToDiagram } from '../conversions';
-import { Diagram, Marble } from '../types';
+import { Diagram } from '../logic/diagram';
+import { Marble } from '../logic/marble';
+import { marblesToDiagram } from '../logic/marble.utils';
 
 @Component({
   selector: 'rx-input-stream',
