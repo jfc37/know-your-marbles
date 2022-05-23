@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { diagramToMarbles } from '../conversions';
-import { MarbleDiagram, MarbleValue } from '../types';
+import { MarbleDiagram, Marble } from '../types';
 
 @Component({
   selector: 'rx-output-stream',
@@ -19,7 +19,7 @@ export class OutputStreamComponent implements OnInit, OnChanges {
   @Input() public diagram!: MarbleDiagram;
   @Input() public numberOfTicks!: number;
 
-  public marbles!: MarbleValue[];
+  public marbles!: Marble[];
 
   public ngOnInit(): void {
     this.marbles = diagramToMarbles(this.diagram);

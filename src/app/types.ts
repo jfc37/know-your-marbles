@@ -5,41 +5,114 @@ export enum Operations {
   Min = 'min',
   TakeUntil = 'take until',
 }
-export interface MarbleValue {
-  values: number[];
-  terminal: boolean;
+
+export class Marble {
+  readonly values: number[];
+  readonly completion: boolean;
+
+  private constructor(values: number[], completion: boolean) {
+    this.completion = completion;
+    this.values = values;
+  }
+
+  public isBlank(): boolean {
+    return !this.completion && this.values.length === 0;
+  }
+
+  public hasNoValues(): boolean {
+    return this.values.length === 0;
+  }
+
+  public hasSingleValue(): boolean {
+    return this.values.length === 1;
+  }
+
+  public toDiagram(keyIndex: number): {
+    diagram: string;
+    values: { [key: string]: number };
+    keyIndex: number;
+  } {
+    if (this.isBlank()) {
+      return { diagram: '-', values: {}, keyIndex };
+    } else if (this.completion && this.hasNoValues()) {
+      return { diagram: '|', values: {}, keyIndex };
+    } else if (!this.completion && this.hasSingleValue()) {
+      return {
+        diagram: DIAGRAM_VALUE_KEYS[keyIndex],
+        values: { [DIAGRAM_VALUE_KEYS[keyIndex]]: this.values[0] },
+        keyIndex: keyIndex + 1,
+      };
+    } else {
+      const diagram = [
+        '(',
+        ...this.values.map((_, index) => DIAGRAM_VALUE_KEYS[keyIndex + index]),
+        this.completion && '|',
+        ')',
+      ]
+        .filter(Boolean)
+        .join('');
+      const values = this.values.reduce(
+        (allValues, currentValue, index) => ({
+          ...allValues,
+          [DIAGRAM_VALUE_KEYS[keyIndex + index]]: currentValue,
+        }),
+        {}
+      );
+
+      return {
+        diagram,
+        values,
+        keyIndex: keyIndex + this.values.length,
+      };
+    }
+  }
+
+  static createEmpty(): Marble {
+    return new Marble([], false);
+  }
+
+  static createCompletion(): Marble {
+    return new Marble([], true);
+  }
+
+  static create(values: number[], completion: boolean = false) {
+    return new Marble(
+      values.filter((value) => value != null),
+      completion
+    );
+  }
 }
+
 export interface MarbleDiagram {
   diagram: string;
   values: { [key: string]: number };
 }
 
-export function createEmptyMarble(): MarbleValue {
-  return {
-    terminal: false,
-    values: [],
-  };
-}
-
-export function createTerminalMarble(value: number | null = null): MarbleValue {
-  return {
-    terminal: true,
-    values: [],
-  };
-}
-
-export function isBlankMarble(marble: MarbleValue): boolean {
-  return !marble.terminal && marble.values.length === 0;
-}
-
-export function isCompletionWithNoEmitMarble(marble: MarbleValue): boolean {
-  return marble.terminal && marble.values.length === 0;
-}
-
-export function doesMarbleContainCompletion(marble: MarbleValue): boolean {
-  return marble.terminal;
-}
-
-export function isSingleEmitMarble(marble: MarbleValue): boolean {
-  return !marble.terminal && marble.values.length === 1;
-}
+const DIAGRAM_VALUE_KEYS = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+];

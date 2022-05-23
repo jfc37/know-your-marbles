@@ -1,13 +1,4 @@
-import {
-  createEmptyMarble,
-  createTerminalMarble,
-  doesMarbleContainCompletion,
-  isBlankMarble,
-  isCompletionWithNoEmitMarble,
-  isSingleEmitMarble,
-  MarbleDiagram,
-  MarbleValue,
-} from './types';
+import { MarbleDiagram, Marble } from './types';
 
 enum MarbleSymbol {
   Blank = '-',
@@ -15,8 +6,8 @@ enum MarbleSymbol {
   Group = '(',
 }
 
-export function diagramToMarbles(diagram: MarbleDiagram): MarbleValue[] {
-  const marbles: MarbleValue[] = [];
+export function diagramToMarbles(diagram: MarbleDiagram): Marble[] {
+  const marbles: Marble[] = [];
   let index = 0;
   while (index < diagram.diagram.length) {
     const result = currentTickToMarble(diagram, index);
@@ -30,16 +21,16 @@ export function diagramToMarbles(diagram: MarbleDiagram): MarbleValue[] {
 function currentTickToMarble(
   diagram: MarbleDiagram,
   index: number
-): { marble: MarbleValue; nextTickIndex: number } {
+): { marble: Marble; nextTickIndex: number } {
   const startOfTick = diagram.diagram[index];
   if (startOfTick == MarbleSymbol.Blank) {
     return {
-      marble: createEmptyMarble(),
+      marble: Marble.createEmpty(),
       nextTickIndex: index + 1,
     };
   } else if (startOfTick == MarbleSymbol.Completion) {
     return {
-      marble: createTerminalMarble(),
+      marble: Marble.createCompletion(),
       nextTickIndex: index + 1,
     };
   } else if (startOfTick == MarbleSymbol.Group) {
@@ -48,88 +39,32 @@ function currentTickToMarble(
     diagram.diagram.substring(openingIndex + 1, closingIndex);
     const values = diagram.diagram.substring(openingIndex + 1, closingIndex);
     return {
-      marble: {
-        terminal: values.includes('|'),
-        values: [diagram.values[values[0]], diagram.values[values[1]]].filter(
-          Boolean
-        ),
-      },
+      marble: Marble.create(
+        [diagram.values[values[0]], diagram.values[values[1]]],
+        values.includes('|')
+      ),
       nextTickIndex: closingIndex + 1,
     };
   } else {
     return {
-      marble: {
-        terminal: false,
-        values: [diagram.values[diagram.diagram[index]]].filter(Boolean),
-      },
+      marble: Marble.create([diagram.values[diagram.diagram[index]]]),
       nextTickIndex: index + 1,
     };
   }
 }
 
-export function marblesToDiagram(marbles: MarbleValue[]): MarbleDiagram {
-  const keys = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-  ];
+export function marblesToDiagram(marbles: Marble[]): MarbleDiagram {
   let keyIndex = 0;
-  const marbleDiagram: MarbleDiagram = {
-    diagram: '',
-    values: {},
-  };
 
-  marbles.forEach((marble) => {
-    if (isBlankMarble(marble)) {
-      marbleDiagram.diagram = marbleDiagram.diagram + '-';
-    } else if (isCompletionWithNoEmitMarble(marble)) {
-      marbleDiagram.diagram = marbleDiagram.diagram + '|';
-    } else if (isSingleEmitMarble(marble)) {
-      marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-      marbleDiagram.values[keys[keyIndex]] = marble.values[0];
-      keyIndex++;
-    } else {
-      marbleDiagram.diagram = marbleDiagram.diagram + '(';
-      marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-      marbleDiagram.values[keys[keyIndex]] = marble.values[0];
-      keyIndex++;
-
-      if (marble.values[1] != null) {
-        marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-        marbleDiagram.values[keys[keyIndex]] = marble.values[1];
-        keyIndex++;
-      }
-
-      if (doesMarbleContainCompletion(marble)) {
-        marbleDiagram.diagram = marbleDiagram.diagram + '|';
-      }
-
-      marbleDiagram.diagram = marbleDiagram.diagram + ')';
-    }
-  });
-
-  return marbleDiagram;
+  return marbles.reduce(
+    (fullDiagram, marble) => {
+      const result = marble.toDiagram(keyIndex);
+      keyIndex = result.keyIndex;
+      return {
+        diagram: fullDiagram.diagram + result.diagram,
+        values: { ...fullDiagram.values, ...result.values },
+      } as MarbleDiagram;
+    },
+    { diagram: '', values: {} } as MarbleDiagram
+  );
 }

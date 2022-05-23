@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { diagramToMarbles, marblesToDiagram } from '../conversions';
-import { createEmptyMarble, MarbleDiagram, MarbleValue } from '../types';
+import { MarbleDiagram, Marble } from '../types';
 
 @Component({
   selector: 'rx-input-stream',
@@ -23,7 +23,7 @@ export class InputStreamComponent implements OnInit, OnChanges {
 
   @Output() public diagramUpdated = new EventEmitter<MarbleDiagram>();
 
-  public marbles: MarbleValue[] = [];
+  public marbles: Marble[] = [];
 
   public ngOnInit(): void {
     this.marbles = diagramToMarbles(this.diagram);
@@ -40,18 +40,18 @@ export class InputStreamComponent implements OnInit, OnChanges {
     return [...Array(numberOfVoidTicks)];
   }
 
-  public marbleUpdated(index: number, marble: MarbleValue): void {
+  public marbleUpdated(index: number, marble: Marble): void {
     let newValues = [...this.marbles];
     newValues[index] = marble;
 
     // if updated value is terminal, remove marbles that follow
-    if (marble.terminal) {
+    if (marble.completion) {
       newValues = newValues.slice(0, index + 1);
-    } else if (this.marbles[index].terminal) {
+    } else if (this.marbles[index].completion) {
       newValues = [
         ...newValues,
         ...[...Array(this.numberOfTicks - index - 1)].map(() =>
-          createEmptyMarble()
+          Marble.createEmpty()
         ),
       ];
     }

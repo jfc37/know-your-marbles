@@ -1,5 +1,5 @@
 import { diagramToMarbles, marblesToDiagram } from './conversions';
-import { MarbleDiagram, MarbleValue, Operations } from './types';
+import { MarbleDiagram, Marble, Operations } from './types';
 
 const OPERATION_CALC_MAP = {
   [Operations.First]: firstCalculation,
@@ -104,8 +104,8 @@ export function minCalculation(input: MarbleDiagram): MarbleDiagram {
   };
 }
 
-function neverCompletes(marbles: MarbleValue[]): boolean {
-  return !marbles.some((marble) => marble.terminal);
+function neverCompletes(marbles: Marble[]): boolean {
+  return !marbles.some((marble) => marble.completion);
 }
 
 function getEmptyMarbleDiagram(ticks: number): MarbleDiagram {
@@ -116,13 +116,13 @@ function getEmptyDiagram(ticks: number): string {
   return [...Array(ticks)].map((_) => '-').join('');
 }
 
-function getFirstEmissionTick(marbles: MarbleValue[]): number {
+function getFirstEmissionTick(marbles: Marble[]): number {
   const first = marbles.find((marble) => marble.values.length > 0);
   return marbles.indexOf(first!);
 }
 
-function getCompletionTick(marbles: MarbleValue[]): number {
-  const completion = marbles.find((marble) => marble.terminal);
+function getCompletionTick(marbles: Marble[]): number {
+  const completion = marbles.find((marble) => marble.completion);
   return marbles.indexOf(completion!);
 }
 

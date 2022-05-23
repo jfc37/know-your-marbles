@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-picker.component';
-import { MarbleValue } from '../types';
+import { Marble } from '../types';
 
 @Component({
   selector: 'rx-marble',
@@ -17,15 +17,15 @@ import { MarbleValue } from '../types';
 })
 export class MarbleComponent {
   @Input() public readonly = false;
-  @Input() public marble!: MarbleValue;
-  @Output() public marbleUpdated = new EventEmitter<MarbleValue>();
+  @Input() public marble!: Marble;
+  @Output() public marbleUpdated = new EventEmitter<Marble>();
 
   public get isTerminal(): boolean {
-    return this.marble.terminal;
+    return this.marble.completion;
   }
 
   public get isEmpty(): boolean {
-    return !this.marble.terminal && !this.isEmission;
+    return !this.marble.completion && !this.isEmission;
   }
 
   public get isEmission(): boolean {
