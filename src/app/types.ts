@@ -6,8 +6,7 @@ export enum Operations {
   TakeUntil = 'take until',
 }
 export interface MarbleValue {
-  value: number | null;
-  secondaryValue?: number;
+  values: number[];
   terminal: boolean;
 }
 export interface MarbleDiagram {
@@ -18,13 +17,29 @@ export interface MarbleDiagram {
 export function createEmptyMarble(): MarbleValue {
   return {
     terminal: false,
-    value: null,
+    values: [],
   };
 }
 
 export function createTerminalMarble(value: number | null = null): MarbleValue {
   return {
     terminal: true,
-    value,
+    values: [],
   };
+}
+
+export function isBlankMarble(marble: MarbleValue): boolean {
+  return !marble.terminal && marble.values.length === 0;
+}
+
+export function isCompletionWithNoEmitMarble(marble: MarbleValue): boolean {
+  return marble.terminal && marble.values.length === 0;
+}
+
+export function doesMarbleContainCompletion(marble: MarbleValue): boolean {
+  return marble.terminal;
+}
+
+export function isSingleEmitMarble(marble: MarbleValue): boolean {
+  return !marble.terminal && marble.values.length === 1;
 }

@@ -117,7 +117,7 @@ function getEmptyDiagram(ticks: number): string {
 }
 
 function getFirstEmissionTick(marbles: MarbleValue[]): number {
-  const first = marbles.find((marble) => marble.value);
+  const first = marbles.find((marble) => marble.values.length > 0);
   return marbles.indexOf(first!);
 }
 

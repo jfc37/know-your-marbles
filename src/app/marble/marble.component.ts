@@ -33,9 +33,7 @@ export class MarbleComponent {
   }
 
   public get marbleValue(): string {
-    return [this.marble.value, this.marble.secondaryValue]
-      .filter((value) => value != null)
-      .join('|');
+    return this.marble.values.join('|');
   }
 
   constructor(public dialog: MatDialog) {}

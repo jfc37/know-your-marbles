@@ -1,6 +1,10 @@
 import {
   createEmptyMarble,
   createTerminalMarble,
+  doesMarbleContainCompletion,
+  isBlankMarble,
+  isCompletionWithNoEmitMarble,
+  isSingleEmitMarble,
   MarbleDiagram,
   MarbleValue,
 } from './types';
@@ -46,8 +50,9 @@ function currentTickToMarble(
     return {
       marble: {
         terminal: values.includes('|'),
-        value: diagram.values[values[0]],
-        secondaryValue: diagram.values[values[1]],
+        values: [diagram.values[values[0]], diagram.values[values[1]]].filter(
+          Boolean
+        ),
       },
       nextTickIndex: closingIndex + 1,
     };
@@ -55,7 +60,7 @@ function currentTickToMarble(
     return {
       marble: {
         terminal: false,
-        value: diagram.values[diagram.diagram[index]],
+        values: [diagram.values[diagram.diagram[index]]].filter(Boolean),
       },
       nextTickIndex: index + 1,
     };
@@ -98,61 +103,32 @@ export function marblesToDiagram(marbles: MarbleValue[]): MarbleDiagram {
   };
 
   marbles.forEach((marble) => {
-    if (!marble.value && !marble.terminal) {
+    if (isBlankMarble(marble)) {
       marbleDiagram.diagram = marbleDiagram.diagram + '-';
-    } else if (!marble.value && marble.terminal) {
+    } else if (isCompletionWithNoEmitMarble(marble)) {
       marbleDiagram.diagram = marbleDiagram.diagram + '|';
-    } else if (
-      marble.value &&
-      marble.secondaryValue == null &&
-      !marble.terminal
-    ) {
+    } else if (isSingleEmitMarble(marble)) {
       marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-      marbleDiagram.values[keys[keyIndex]] = marble.value;
+      marbleDiagram.values[keys[keyIndex]] = marble.values[0];
       keyIndex++;
     } else {
       marbleDiagram.diagram = marbleDiagram.diagram + '(';
       marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-      marbleDiagram.values[keys[keyIndex]] = marble.value!;
+      marbleDiagram.values[keys[keyIndex]] = marble.values[0];
       keyIndex++;
 
-      if (marble.secondaryValue != null) {
+      if (marble.values[1] != null) {
         marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-        marbleDiagram.values[keys[keyIndex]] = marble.secondaryValue;
+        marbleDiagram.values[keys[keyIndex]] = marble.values[1];
         keyIndex++;
       }
 
-      if (marble.terminal) {
+      if (doesMarbleContainCompletion(marble)) {
         marbleDiagram.diagram = marbleDiagram.diagram + '|';
       }
 
       marbleDiagram.diagram = marbleDiagram.diagram + ')';
     }
-
-    // if (!marble.value) {
-    //   if (!marble.terminal) {
-    //     marbleDiagram.diagram = marbleDiagram.diagram + '-';
-    //   } else {
-    //     marbleDiagram.diagram = marbleDiagram.diagram + '(|)';
-    //   }
-    // } else {
-    //   marbleDiagram.diagram = marbleDiagram.diagram + '(';
-    //   marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-    //   marbleDiagram.values[keys[keyIndex]] = marble.value;
-    //   keyIndex++;
-
-    //   if (marble.secondaryValue != null) {
-    //     marbleDiagram.diagram = marbleDiagram.diagram + keys[keyIndex];
-    //     marbleDiagram.values[keys[keyIndex]] = marble.secondaryValue;
-    //     keyIndex++;
-    //   }
-
-    //   if (marble.terminal) {
-    //     marbleDiagram.diagram = marbleDiagram.diagram + '|';
-    //   }
-
-    //   marbleDiagram.diagram = marbleDiagram.diagram + ')';
-    // }
   });
 
   return marbleDiagram;

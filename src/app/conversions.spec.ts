@@ -16,7 +16,7 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBeNull();
+    expect(marbles[0].values).toEqual([]);
     expect(marbles[0].terminal).toBeFalse();
   });
 
@@ -29,7 +29,7 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBeNull();
+    expect(marbles[0].values).toEqual([]);
     expect(marbles[0].terminal).toBeTrue();
   });
 
@@ -42,7 +42,7 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBe(1);
+    expect(marbles[0].values[0]).toBe(1);
     expect(marbles[0].terminal).toBeFalse();
   });
 
@@ -55,7 +55,7 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBe(1);
+    expect(marbles[0].values[0]).toBe(1);
     expect(marbles[0].terminal).toBeTrue();
   });
 
@@ -68,7 +68,7 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(3);
-    expect(marbles[2].value).toBe(1);
+    expect(marbles[2].values[0]).toBe(1);
     expect(marbles[2].terminal).toBeTrue();
   });
 
@@ -81,8 +81,8 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBe(1);
-    expect(marbles[0].secondaryValue).toBe(2);
+    expect(marbles[0].values[0]).toBe(1);
+    expect(marbles[0].values[1]).toBe(2);
     expect(marbles[0].terminal).toBeFalse();
   });
 
@@ -95,8 +95,8 @@ describe('diagramToMarbles', () => {
     const marbles = diagramToMarbles(marbleDiagram);
 
     expect(marbles.length).toBe(1);
-    expect(marbles[0].value).toBe(1);
-    expect(marbles[0].secondaryValue).toBe(2);
+    expect(marbles[0].values[0]).toBe(1);
+    expect(marbles[0].values[1]).toBe(2);
     expect(marbles[0].terminal).toBeTrue();
   });
 });
@@ -121,7 +121,7 @@ describe('marblesToDiagram', () => {
   });
 
   it('should map marble with single value to "a"', () => {
-    const marbles: MarbleValue[] = [{ value: 1, terminal: false }];
+    const marbles: MarbleValue[] = [{ values: [1], terminal: false }];
 
     const diagram = marblesToDiagram(marbles);
 
@@ -130,7 +130,7 @@ describe('marblesToDiagram', () => {
   });
 
   it('should map marble with single value and completion to "(a|)"', () => {
-    const marbles: MarbleValue[] = [{ value: 1, terminal: true }];
+    const marbles: MarbleValue[] = [{ values: [1], terminal: true }];
 
     const diagram = marblesToDiagram(marbles);
 
@@ -139,9 +139,7 @@ describe('marblesToDiagram', () => {
   });
 
   it('should map marble with multiple values to "(ab)"', () => {
-    const marbles: MarbleValue[] = [
-      { value: 1, secondaryValue: 2, terminal: false },
-    ];
+    const marbles: MarbleValue[] = [{ values: [1, 2], terminal: false }];
 
     const diagram = marblesToDiagram(marbles);
 
@@ -150,9 +148,7 @@ describe('marblesToDiagram', () => {
   });
 
   it('should map marble with multiple values with completion to "(ab|)"', () => {
-    const marbles: MarbleValue[] = [
-      { value: 1, secondaryValue: 2, terminal: true },
-    ];
+    const marbles: MarbleValue[] = [{ values: [1, 2], terminal: true }];
 
     const diagram = marblesToDiagram(marbles);
 
