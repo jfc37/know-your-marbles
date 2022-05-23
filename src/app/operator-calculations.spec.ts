@@ -9,8 +9,8 @@ import {
   OperatorFunction,
   takeUntil,
 } from 'rxjs';
-import { getCalculationFn } from './operator-calculations';
-import { Diagram, Operations } from './types';
+import { Diagram } from './logic/diagram';
+import { getOperationFn, Operations } from './logic/operation-map';
 
 describe('first', () => {
   it('check "-----" has same output as rxjs', () => {
@@ -125,7 +125,7 @@ function compareWithRxjs<TInput, TOutput>(
   const realInput = cold(diagram.diagram, diagram.values);
   const realOutput = realInput.pipe(rxjsOperation);
 
-  const simulatedOutput = getCalculationFn(operation)(diagram);
+  const simulatedOutput = getOperationFn(operation)(diagram);
   expect(realOutput).toBeObservable(
     cold(simulatedOutput.diagram, simulatedOutput.values)
   );
@@ -146,7 +146,7 @@ function binaryCompareWithRxjs<TOutput>(
   );
   const realOutput = realPrimaryInput.pipe(rxjsOperation(realSecondaryInput));
 
-  const simulatedOutput = getCalculationFn(operation)(
+  const simulatedOutput = getOperationFn(operation)(
     primaryDiagram,
     secondaryDiagram
   );
@@ -160,7 +160,7 @@ function compareWithExpected(
   operation: Operations,
   expectedOutput: Diagram
 ): void {
-  const simulatedOutput = getCalculationFn(operation)(diagram);
+  const simulatedOutput = getOperationFn(operation)(diagram);
   expect(cold(simulatedOutput.diagram, simulatedOutput.values)).toBeObservable(
     cold(expectedOutput.diagram, expectedOutput.values)
   );

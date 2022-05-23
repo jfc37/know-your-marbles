@@ -1,5 +1,6 @@
-import { marblesToDiagram } from './conversions';
-import { Diagram, Marble } from './types';
+import { Diagram } from './logic/diagram';
+import { Marble } from './logic/marble';
+import { marblesToDiagram } from './logic/marble.utils';
 
 describe('diagramToMarbles', () => {
   it('should map "-"', () => {
