@@ -118,6 +118,14 @@ export class Diagram {
     });
   }
 
+  public get emittedValues(): number[] {
+    return [...Object.values(this.values)];
+  }
+
+  public get hasNoEmittedValues(): boolean {
+    return this.emittedValues.length === 0;
+  }
+
   private currentTickToMarble(index: number): {
     marble: Marble;
     nextTickIndex: number;

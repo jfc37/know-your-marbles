@@ -1,4 +1,4 @@
-import { diagramToMarbles, marblesToDiagram } from './conversions';
+import { marblesToDiagram } from './conversions';
 import { Diagram, Marble, Operations } from './types';
 
 const OPERATION_CALC_MAP = {
@@ -26,14 +26,14 @@ export function takeUntilCalculation(
   primaryInput: Diagram,
   secondaryInput: Diagram
 ): Diagram {
-  if (neverEmits(secondaryInput)) {
+  if (secondaryInput.hasNoEmittedValues) {
     return primaryInput;
   }
 
-  const secondaryMarbles = diagramToMarbles(secondaryInput);
+  const secondaryMarbles = secondaryInput.toMarbles();
   const firstEmission = getFirstEmissionTick(secondaryMarbles);
 
-  const primaryMarbles = diagramToMarbles(primaryInput);
+  const primaryMarbles = primaryInput.toMarbles();
   const truncatedPrimaryMarbles = primaryMarbles.slice(0, firstEmission);
   const truncatedPrimaryDiagram = marblesToDiagram(truncatedPrimaryMarbles);
   return Diagram.create(
@@ -43,9 +43,9 @@ export function takeUntilCalculation(
 }
 
 export function firstCalculation(input: Diagram): Diagram {
-  const marbles = diagramToMarbles(input);
+  const marbles = input.toMarbles();
 
-  if (neverEmits(input)) {
+  if (input.hasNoEmittedValues) {
     return Diagram.createWithBlankTicks(marbles.length);
   }
 
@@ -56,18 +56,18 @@ export function firstCalculation(input: Diagram): Diagram {
 }
 
 export function maxCalculation(input: Diagram): Diagram {
-  const marbles = diagramToMarbles(input);
+  const marbles = input.toMarbles();
 
   if (neverCompletes(marbles)) {
     return Diagram.createWithBlankTicks(marbles.length);
   }
   const completionTick = getCompletionTick(marbles);
 
-  if (neverEmits(input)) {
+  if (input.hasNoEmittedValues) {
     return Diagram.createWithBlankTicks(completionTick).prepend('|');
   }
 
-  const max = getEmittedValues(input).sort(orderAscending)[0];
+  const max = input.emittedValues.sort(orderAscending)[0];
 
   return Diagram.createWithBlankTicks(completionTick).prepend(
     Diagram.create('(a|)', { a: max })
@@ -75,18 +75,18 @@ export function maxCalculation(input: Diagram): Diagram {
 }
 
 export function minCalculation(input: Diagram): Diagram {
-  const marbles = diagramToMarbles(input);
+  const marbles = input.toMarbles();
 
   if (neverCompletes(marbles)) {
     return Diagram.createWithBlankTicks(marbles.length);
   }
   const completionTick = getCompletionTick(marbles);
 
-  if (neverEmits(input)) {
+  if (input.hasNoEmittedValues) {
     return Diagram.createWithBlankTicks(completionTick).prepend('|');
   }
 
-  const min = getEmittedValues(input).sort(orderDescending)[0];
+  const min = input.emittedValues.sort(orderDescending)[0];
 
   return Diagram.createWithBlankTicks(completionTick).prepend(
     Diagram.create('(a|)', { a: min })
@@ -105,14 +105,6 @@ function getFirstEmissionTick(marbles: Marble[]): number {
 function getCompletionTick(marbles: Marble[]): number {
   const completion = marbles.find((marble) => marble.completion);
   return marbles.indexOf(completion!);
-}
-
-function getEmittedValues(marbleDiagram: Diagram): number[] {
-  return [...Object.values(marbleDiagram.values)];
-}
-
-function neverEmits(marbleDiagram: Diagram): boolean {
-  return Object.values(marbleDiagram.values).length === 0;
 }
 
 function orderAscending(a: number, b: number) {

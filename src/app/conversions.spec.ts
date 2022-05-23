@@ -1,11 +1,11 @@
-import { diagramToMarbles, marblesToDiagram } from './conversions';
+import { marblesToDiagram } from './conversions';
 import { Diagram, Marble } from './types';
 
 describe('diagramToMarbles', () => {
   it('should map "-"', () => {
     const diagram = Diagram.create('-');
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
@@ -15,7 +15,7 @@ describe('diagramToMarbles', () => {
   it('should map "|"', () => {
     const diagram = Diagram.create('|');
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
@@ -25,7 +25,7 @@ describe('diagramToMarbles', () => {
   it('should map "a"', () => {
     const diagram = Diagram.create('a', { a: 1 });
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -35,7 +35,7 @@ describe('diagramToMarbles', () => {
   it('should map (a|)', () => {
     const diagram = Diagram.create('(a|)', { a: 1 });
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -45,7 +45,7 @@ describe('diagramToMarbles', () => {
   it('should map --(a|)', () => {
     const diagram = Diagram.create('--(a|)', { a: 1 });
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(3);
     expect(marbles[2].values[0]).toBe(1);
@@ -55,7 +55,7 @@ describe('diagramToMarbles', () => {
   it('should map (ab)', () => {
     const diagram = Diagram.create('(ab)', { a: 1, b: 2 });
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -66,7 +66,7 @@ describe('diagramToMarbles', () => {
   it('should map (ab|)', () => {
     const diagram = Diagram.create('(ab|)', { a: 1, b: 2 });
 
-    const marbles = diagramToMarbles(diagram);
+    const marbles = diagram.toMarbles();
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
