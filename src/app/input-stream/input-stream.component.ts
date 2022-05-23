@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { diagramToMarbles, marblesToDiagram } from '../conversions';
-import { MarbleDiagram, Marble } from '../types';
+import { Diagram, Marble } from '../types';
 
 @Component({
   selector: 'rx-input-stream',
@@ -18,10 +18,10 @@ import { MarbleDiagram, Marble } from '../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputStreamComponent implements OnInit, OnChanges {
-  @Input() public diagram!: MarbleDiagram;
+  @Input() public diagram!: Diagram;
   @Input() public numberOfTicks!: number;
 
-  @Output() public diagramUpdated = new EventEmitter<MarbleDiagram>();
+  @Output() public diagramUpdated = new EventEmitter<Diagram>();
 
   public marbles: Marble[] = [];
 

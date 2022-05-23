@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { diagramToMarbles } from '../conversions';
-import { MarbleDiagram, Marble } from '../types';
+import { Diagram, Marble } from '../types';
 
 @Component({
   selector: 'rx-output-stream',
@@ -16,7 +16,7 @@ import { MarbleDiagram, Marble } from '../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutputStreamComponent implements OnInit, OnChanges {
-  @Input() public diagram!: MarbleDiagram;
+  @Input() public diagram!: Diagram;
   @Input() public numberOfTicks!: number;
 
   public marbles!: Marble[];

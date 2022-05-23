@@ -1,14 +1,11 @@
 import { diagramToMarbles, marblesToDiagram } from './conversions';
-import { MarbleDiagram, Marble } from './types';
+import { Diagram, Marble } from './types';
 
 describe('diagramToMarbles', () => {
   it('should map "-"', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '-',
-      values: {},
-    };
+    const diagram = Diagram.create('-');
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
@@ -16,12 +13,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map "|"', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '|',
-      values: {},
-    };
+    const diagram = Diagram.create('|');
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
@@ -29,12 +23,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map "a"', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: 'a',
-      values: { a: 1 },
-    };
+    const diagram = Diagram.create('a', { a: 1 });
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -42,12 +33,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map (a|)', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '(a|)',
-      values: { a: 1 },
-    };
+    const diagram = Diagram.create('(a|)', { a: 1 });
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -55,12 +43,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map --(a|)', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '--(a|)',
-      values: { a: 1 },
-    };
+    const diagram = Diagram.create('--(a|)', { a: 1 });
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(3);
     expect(marbles[2].values[0]).toBe(1);
@@ -68,12 +53,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map (ab)', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '(ab)',
-      values: { a: 1, b: 2 },
-    };
+    const diagram = Diagram.create('(ab)', { a: 1, b: 2 });
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
@@ -82,12 +64,9 @@ describe('diagramToMarbles', () => {
   });
 
   it('should map (ab|)', () => {
-    const marbleDiagram: MarbleDiagram = {
-      diagram: '(ab|)',
-      values: { a: 1, b: 2 },
-    };
+    const diagram = Diagram.create('(ab|)', { a: 1, b: 2 });
 
-    const marbles = diagramToMarbles(marbleDiagram);
+    const marbles = diagramToMarbles(diagram);
 
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);

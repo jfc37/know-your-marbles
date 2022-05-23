@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { getCalculationFn } from './operator-calculations';
-import { MarbleDiagram, Operations } from './types';
+import { Diagram, Operations } from './types';
 
 @Component({
   selector: 'rx-root',
@@ -8,9 +8,9 @@ import { MarbleDiagram, Operations } from './types';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public primaryInputDiagram: MarbleDiagram = getInitialMarbleDiagram();
-  public secondaryInputDiagram?: MarbleDiagram = undefined;
-  public outputDiagram: MarbleDiagram = getInitialMarbleDiagram();
+  public primaryInputDiagram: Diagram = getInitialMarbleDiagram();
+  public secondaryInputDiagram?: Diagram = undefined;
+  public outputDiagram: Diagram = getInitialMarbleDiagram();
 
   public selectedOperation = Operations.First;
   public numberOfTick = 5;
@@ -23,12 +23,12 @@ export class AppComponent {
     return this.hasSecondaryInputDiagram ? BINARY_OPERATORS : UNARY_OPERATORS;
   }
 
-  public primaryInputDiagramChanged(diagram: MarbleDiagram): void {
+  public primaryInputDiagramChanged(diagram: Diagram): void {
     this.primaryInputDiagram = diagram;
     this.recalculateOutputMarbles();
   }
 
-  public secondaryInputDiagramChanged(diagram: MarbleDiagram): void {
+  public secondaryInputDiagramChanged(diagram: Diagram): void {
     this.secondaryInputDiagram = diagram;
     this.recalculateOutputMarbles();
   }
@@ -59,9 +59,6 @@ export class AppComponent {
 const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
 const BINARY_OPERATORS = [Operations.Merge, Operations.TakeUntil];
 
-function getInitialMarbleDiagram(): MarbleDiagram {
-  return {
-    diagram: '-----',
-    values: {},
-  };
+function getInitialMarbleDiagram(): Diagram {
+  return Diagram.createWithBlankTicks(5);
 }

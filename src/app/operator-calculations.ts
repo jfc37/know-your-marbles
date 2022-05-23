@@ -1,5 +1,5 @@
 import { diagramToMarbles, marblesToDiagram } from './conversions';
-import { MarbleDiagram, Marble, Operations } from './types';
+import { Diagram, Marble, Operations } from './types';
 
 const OPERATION_CALC_MAP = {
   [Operations.First]: firstCalculation,
@@ -11,21 +11,21 @@ const OPERATION_CALC_MAP = {
 
 export function getCalculationFn(
   operator: Operations
-): (...inputs: MarbleDiagram[]) => MarbleDiagram {
+): (...inputs: Diagram[]) => Diagram {
   return OPERATION_CALC_MAP[operator];
 }
 
 export function mergeCalculation(
-  primaryInput: MarbleDiagram,
-  secondaryInput: MarbleDiagram
-): MarbleDiagram {
+  primaryInput: Diagram,
+  secondaryInput: Diagram
+): Diagram {
   return primaryInput;
 }
 
 export function takeUntilCalculation(
-  primaryInput: MarbleDiagram,
-  secondaryInput: MarbleDiagram
-): MarbleDiagram {
+  primaryInput: Diagram,
+  secondaryInput: Diagram
+): Diagram {
   if (neverEmits(secondaryInput)) {
     return primaryInput;
   }
@@ -36,84 +36,65 @@ export function takeUntilCalculation(
   const primaryMarbles = diagramToMarbles(primaryInput);
   const truncatedPrimaryMarbles = primaryMarbles.slice(0, firstEmission);
   const truncatedPrimaryDiagram = marblesToDiagram(truncatedPrimaryMarbles);
-  truncatedPrimaryDiagram.diagram = truncatedPrimaryDiagram.diagram + '|';
-  return truncatedPrimaryDiagram;
+  return Diagram.create(
+    truncatedPrimaryDiagram.diagram + '|',
+    truncatedPrimaryDiagram.values
+  );
 }
 
-export function firstCalculation(input: MarbleDiagram): MarbleDiagram {
+export function firstCalculation(input: Diagram): Diagram {
   const marbles = diagramToMarbles(input);
 
   if (neverEmits(input)) {
-    return getEmptyMarbleDiagram(marbles.length);
+    return Diagram.createWithBlankTicks(marbles.length);
   }
 
   const firstEmissionTick = getFirstEmissionTick(marbles);
-  return {
-    diagram: getEmptyDiagram(firstEmissionTick) + '(a|)',
-    values: { a: input.values['a'] },
-  };
+  return Diagram.createWithBlankTicks(firstEmissionTick).prepend(
+    Diagram.create('(a|)', { a: input.values['a'] })
+  );
 }
 
-export function maxCalculation(input: MarbleDiagram): MarbleDiagram {
+export function maxCalculation(input: Diagram): Diagram {
   const marbles = diagramToMarbles(input);
 
   if (neverCompletes(marbles)) {
-    return getEmptyMarbleDiagram(marbles.length);
+    return Diagram.createWithBlankTicks(marbles.length);
   }
   const completionTick = getCompletionTick(marbles);
 
   if (neverEmits(input)) {
-    return {
-      diagram: getEmptyDiagram(completionTick) + '|',
-      values: {},
-    };
+    return Diagram.createWithBlankTicks(completionTick).prepend('|');
   }
 
   const max = getEmittedValues(input).sort(orderAscending)[0];
 
-  return {
-    diagram: getEmptyDiagram(completionTick) + '(a|)',
-    values: {
-      a: max,
-    },
-  };
+  return Diagram.createWithBlankTicks(completionTick).prepend(
+    Diagram.create('(a|)', { a: max })
+  );
 }
 
-export function minCalculation(input: MarbleDiagram): MarbleDiagram {
+export function minCalculation(input: Diagram): Diagram {
   const marbles = diagramToMarbles(input);
 
   if (neverCompletes(marbles)) {
-    return getEmptyMarbleDiagram(marbles.length);
+    return Diagram.createWithBlankTicks(marbles.length);
   }
   const completionTick = getCompletionTick(marbles);
 
   if (neverEmits(input)) {
-    return {
-      diagram: getEmptyDiagram(completionTick) + '|',
-      values: {},
-    };
+    return Diagram.createWithBlankTicks(completionTick).prepend('|');
   }
 
   const min = getEmittedValues(input).sort(orderDescending)[0];
 
-  return {
-    diagram: getEmptyDiagram(completionTick) + '(a|)',
-    values: {
-      a: min,
-    },
-  };
+  return Diagram.createWithBlankTicks(completionTick).prepend(
+    Diagram.create('(a|)', { a: min })
+  );
 }
 
 function neverCompletes(marbles: Marble[]): boolean {
   return !marbles.some((marble) => marble.completion);
-}
-
-function getEmptyMarbleDiagram(ticks: number): MarbleDiagram {
-  return { diagram: getEmptyDiagram(ticks), values: {} };
-}
-
-function getEmptyDiagram(ticks: number): string {
-  return [...Array(ticks)].map((_) => '-').join('');
 }
 
 function getFirstEmissionTick(marbles: Marble[]): number {
@@ -126,11 +107,11 @@ function getCompletionTick(marbles: Marble[]): number {
   return marbles.indexOf(completion!);
 }
 
-function getEmittedValues(marbleDiagram: MarbleDiagram): number[] {
+function getEmittedValues(marbleDiagram: Diagram): number[] {
   return [...Object.values(marbleDiagram.values)];
 }
 
-function neverEmits(marbleDiagram: MarbleDiagram): boolean {
+function neverEmits(marbleDiagram: Diagram): boolean {
   return Object.values(marbleDiagram.values).length === 0;
 }
 
