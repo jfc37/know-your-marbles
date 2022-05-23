@@ -8,7 +8,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { diagramToMarbles, marblesToDiagram } from '../conversions';
+import { marblesToDiagram } from '../conversions';
 import { Diagram, Marble } from '../types';
 
 @Component({
@@ -26,12 +26,12 @@ export class InputStreamComponent implements OnInit, OnChanges {
   public marbles: Marble[] = [];
 
   public ngOnInit(): void {
-    this.marbles = diagramToMarbles(this.diagram);
+    this.marbles = this.diagram.toMarbles();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['diagram'] && !changes['diagram'].isFirstChange()) {
-      this.marbles = diagramToMarbles(changes['diagram'].currentValue);
+      this.marbles = this.diagram.toMarbles();
     }
   }
 

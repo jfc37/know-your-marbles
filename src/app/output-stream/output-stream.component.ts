@@ -6,7 +6,6 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { diagramToMarbles } from '../conversions';
 import { Diagram, Marble } from '../types';
 
 @Component({
@@ -22,12 +21,12 @@ export class OutputStreamComponent implements OnInit, OnChanges {
   public marbles!: Marble[];
 
   public ngOnInit(): void {
-    this.marbles = diagramToMarbles(this.diagram);
+    this.marbles = this.diagram.toMarbles();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['diagram'] && !changes['diagram'].isFirstChange()) {
-      this.marbles = diagramToMarbles(changes['diagram'].currentValue);
+      this.marbles = this.diagram.toMarbles();
     }
   }
 
