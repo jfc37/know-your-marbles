@@ -62,7 +62,11 @@ export class AppComponent implements OnInit {
 }
 
 const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
-const BINARY_OPERATORS = [Operations.Merge, Operations.TakeUntil];
+const BINARY_OPERATORS = [
+  Operations.ConcatWith,
+  Operations.Merge,
+  Operations.TakeUntil,
+];
 
 function getInitialMarbleDiagram(): Diagram {
   return Diagram.createWithBlankTicks(5);

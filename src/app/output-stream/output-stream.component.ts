@@ -33,6 +33,6 @@ export class OutputStreamComponent implements OnInit, OnChanges {
 
   public get voidTicks(): void[] {
     const numberOfVoidTicks = this.numberOfTicks - this.marbles.length;
-    return [...Array(numberOfVoidTicks)];
+    return numberOfVoidTicks > 0 ? [...Array(numberOfVoidTicks)] : [];
   }
 }

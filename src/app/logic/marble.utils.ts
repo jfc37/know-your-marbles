@@ -17,7 +17,7 @@ export function marblesToDiagram(marbles: Marble[]): Diagram {
 
 export function messagesToDiagram(messages: TestMessage[]): Diagram {
   if (!messages || messages.length === 0) {
-    return Diagram.createWithBlankTicks(1);
+    return Diagram.createWithBlankTicks(5);
   }
 
   const totalFrames = messages[messages.length - 1].frame + 1;

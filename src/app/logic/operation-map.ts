@@ -1,11 +1,19 @@
-import { concat, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TestMessage } from 'rxjs/internal/testing/TestMessage';
-import { first, map, max, takeUntil, mergeWith, min } from 'rxjs/operators';
+import {
+  first,
+  concatWith,
+  max,
+  takeUntil,
+  mergeWith,
+  min,
+} from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
 import { messagesToDiagram } from './marble.utils';
 
 export enum Operations {
+  ConcatWith = 'concat with',
   First = 'first',
   Max = 'max',
   Merge = 'merge',
@@ -14,6 +22,7 @@ export enum Operations {
 }
 
 const OPERATION_CALC_MAP = {
+  [Operations.ConcatWith]: (obs$: Observable<any>) => concatWith(obs$),
   [Operations.First]: (obs$: Observable<any>) => first(),
   [Operations.Max]: (obs$: Observable<any>) => max(),
   [Operations.Merge]: (obs$: Observable<any>) => mergeWith(obs$),
