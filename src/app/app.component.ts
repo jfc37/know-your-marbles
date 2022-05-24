@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Diagram } from './logic/diagram';
-import { getOperationFn, Operations } from './logic/operation-map';
+import { invokeOperator, Operations } from './logic/operation-map';
 
 @Component({
   selector: 'rx-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public primaryInputDiagram: Diagram = getInitialMarbleDiagram();
   public secondaryInputDiagram?: Diagram = undefined;
   public outputDiagram: Diagram = getInitialMarbleDiagram();
@@ -21,6 +21,10 @@ export class AppComponent {
 
   public get operations(): Operations[] {
     return this.hasSecondaryInputDiagram ? BINARY_OPERATORS : UNARY_OPERATORS;
+  }
+
+  public ngOnInit(): void {
+    this.recalculateOutputMarbles();
   }
 
   public primaryInputDiagramChanged(diagram: Diagram): void {
@@ -49,7 +53,8 @@ export class AppComponent {
   }
 
   private recalculateOutputMarbles(): void {
-    this.outputDiagram = getOperationFn(this.selectedOperation)(
+    this.outputDiagram = invokeOperator(
+      this.selectedOperation,
       this.primaryInputDiagram,
       this.secondaryInputDiagram!
     );
