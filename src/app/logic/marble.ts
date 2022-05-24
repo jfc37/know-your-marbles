@@ -1,14 +1,12 @@
 export class Marble {
   private constructor(
     public readonly values: number[],
-    public readonly completion: boolean
-  ) {
-    this.completion = completion;
-    this.values = values;
-  }
+    public readonly completion: boolean,
+    public readonly error: boolean
+  ) {}
 
   public isBlank(): boolean {
-    return !this.completion && this.values.length === 0;
+    return !this.error && !this.completion && this.values.length === 0;
   }
 
   public hasNoValues(): boolean {
@@ -26,6 +24,8 @@ export class Marble {
   } {
     if (this.isBlank()) {
       return { diagram: '-', values: {}, keyIndex };
+    } else if (this.error) {
+      return { diagram: '#', values: {}, keyIndex };
     } else if (this.completion && this.hasNoValues()) {
       return { diagram: '|', values: {}, keyIndex };
     } else if (!this.completion && this.hasSingleValue()) {
@@ -60,17 +60,22 @@ export class Marble {
   }
 
   static createEmpty(): Marble {
-    return new Marble([], false);
+    return new Marble([], false, false);
   }
 
   static createCompletion(): Marble {
-    return new Marble([], true);
+    return new Marble([], true, false);
   }
 
-  static create(values: number[], completion: boolean = false) {
+  static createError(): Marble {
+    return new Marble([], false, true);
+  }
+
+  static create(values: number[], completion = false, error = false) {
     return new Marble(
       values.filter((value) => value != null),
-      completion
+      completion,
+      error
     );
   }
 }

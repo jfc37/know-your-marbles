@@ -24,8 +24,12 @@ export class MarbleComponent {
     return this.marble.completion;
   }
 
+  public get isError(): boolean {
+    return this.marble.error;
+  }
+
   public get isEmpty(): boolean {
-    return !this.marble.completion && !this.isEmission;
+    return this.marble.isBlank();
   }
 
   public get isEmission(): boolean {

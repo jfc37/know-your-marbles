@@ -17,8 +17,7 @@ describe('first', () => {
     compareWithRxjs(Diagram.create('-----'), Operations.First, first());
   });
 
-  // TODO: Need to implement errors
-  xit('check "----|" has same output as rxjs', () => {
+  it('check "----|" has same output as rxjs', () => {
     compareWithRxjs(Diagram.create('----|'), Operations.First, first());
   });
 
@@ -127,7 +126,7 @@ function compareWithRxjs<TInput, TOutput>(
 
   const simulatedOutput = getOperationFn(operation)(diagram);
   expect(realOutput).toBeObservable(
-    cold(simulatedOutput.diagram, simulatedOutput.values)
+    cold(simulatedOutput.diagram, simulatedOutput.values, jasmine.anything())
   );
 }
 

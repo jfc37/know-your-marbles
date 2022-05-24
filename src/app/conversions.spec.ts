@@ -11,6 +11,7 @@ describe('diagramToMarbles', () => {
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
     expect(marbles[0].completion).toBeFalse();
+    expect(marbles[0].error).toBeFalse();
   });
 
   it('should map "|"', () => {
@@ -21,6 +22,18 @@ describe('diagramToMarbles', () => {
     expect(marbles.length).toBe(1);
     expect(marbles[0].values).toEqual([]);
     expect(marbles[0].completion).toBeTrue();
+    expect(marbles[0].error).toBeFalse();
+  });
+
+  it('should map "#"', () => {
+    const diagram = Diagram.create('#');
+
+    const marbles = diagram.toMarbles();
+
+    expect(marbles.length).toBe(1);
+    expect(marbles[0].values).toEqual([]);
+    expect(marbles[0].completion).toBeFalse();
+    expect(marbles[0].error).toBeTrue();
   });
 
   it('should map "a"', () => {
@@ -31,6 +44,7 @@ describe('diagramToMarbles', () => {
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
     expect(marbles[0].completion).toBeFalse();
+    expect(marbles[0].error).toBeFalse();
   });
 
   it('should map (a|)', () => {
@@ -41,6 +55,7 @@ describe('diagramToMarbles', () => {
     expect(marbles.length).toBe(1);
     expect(marbles[0].values[0]).toBe(1);
     expect(marbles[0].completion).toBeTrue();
+    expect(marbles[0].error).toBeFalse();
   });
 
   it('should map --(a|)', () => {
@@ -86,6 +101,15 @@ describe('marblesToDiagram', () => {
     expect(diagram.values).toEqual({});
   });
 
+  it('should map error marble to "#"', () => {
+    const marbles = [Marble.createError()];
+
+    const diagram = marblesToDiagram(marbles);
+
+    expect(diagram.diagram).toBe('#');
+    expect(diagram.values).toEqual({});
+  });
+
   it('should map completion marble with no value to "|"', () => {
     const marbles = [Marble.createCompletion()];
 
@@ -125,7 +149,6 @@ describe('marblesToDiagram', () => {
   it('should map marble with multiple values with completion to "(ab|)"', () => {
     const marbles = [Marble.create([1, 2], true)];
 
-    marbles[0]; /*?*/
     const diagram = marblesToDiagram(marbles);
 
     expect(diagram.diagram).toBe('(ab|)');

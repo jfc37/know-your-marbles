@@ -37,6 +37,10 @@ export class Diagram {
     return this.emittedValues.length === 0;
   }
 
+  public get completes(): boolean {
+    return this.diagram.includes(MarbleSymbol.Completion);
+  }
+
   private currentTickToMarble(index: number): {
     marble: Marble;
     nextTickIndex: number;
@@ -50,6 +54,11 @@ export class Diagram {
     } else if (startOfTick == MarbleSymbol.Completion) {
       return {
         marble: Marble.createCompletion(),
+        nextTickIndex: index + 1,
+      };
+    } else if (startOfTick == MarbleSymbol.Error) {
+      return {
+        marble: Marble.createError(),
         nextTickIndex: index + 1,
       };
     } else if (startOfTick == MarbleSymbol.Group) {
@@ -85,5 +94,6 @@ export class Diagram {
 enum MarbleSymbol {
   Blank = '-',
   Completion = '|',
+  Error = '#',
   Group = '(',
 }
