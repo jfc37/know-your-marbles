@@ -1,0 +1,57 @@
+:host {
+  min-width: 800px;
+  display: flex;
+  gap: 2rem;
+  background-color: whitesmoke;
+}
+
+section {
+  min-width: 300px;
+  min-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid black;
+}
+
+.visual {
+  height: max(100px, 80%);
+  padding: 1rem 0;
+  position: relative;
+}
+
+.marble {
+  border-radius: 100%;
+  background-color: hotpink;
+  height: 5rem;
+  width: 5rem;
+  color: white;
+  z-index: 3;
+
+  input {
+    width: 60%;
+    margin-top: 1.75rem;
+    margin-left: 1rem;
+  }
+}
+
+.empty-marble {
+  border-radius: 100%;
+  background-color: black;
+  border: solid 1px black;
+  height: 1rem;
+  width: 1rem;
+  margin-top: 0.25rem;
+}
+
+.completion {
+  background-color: black;
+  height: 6.75rem;
+  width: 0.2rem;
+
+  &.over-marble {
+    position: absolute;
+  }
+}

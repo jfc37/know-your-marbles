@@ -13,7 +13,7 @@ import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
 import { messagesToDiagram } from './marble.utils';
 
-export enum Operations {
+export enum Operators {
   ConcatWith = 'concat with',
   First = 'first',
   Max = 'max',
@@ -23,18 +23,18 @@ export enum Operations {
   TakeUntil = 'take until',
 }
 
-const OPERATION_CALC_MAP = {
-  [Operations.ConcatWith]: (obs$: Observable<any>) => concatWith(obs$),
-  [Operations.First]: (obs$: Observable<any>) => first(),
-  [Operations.Max]: (obs$: Observable<any>) => max(),
-  [Operations.Merge]: (obs$: Observable<any>) => mergeWith(obs$),
-  [Operations.Min]: (obs$: Observable<any>) => min(),
-  [Operations.SwitchMap]: (obs$: Observable<any>) => switchMap(() => obs$),
-  [Operations.TakeUntil]: (obs$: Observable<any>) => takeUntil(obs$),
+const OPERATOR_FN_MAP = {
+  [Operators.ConcatWith]: (obs$: Observable<any>) => concatWith(obs$),
+  [Operators.First]: (obs$: Observable<any>) => first(),
+  [Operators.Max]: (obs$: Observable<any>) => max(),
+  [Operators.Merge]: (obs$: Observable<any>) => mergeWith(obs$),
+  [Operators.Min]: (obs$: Observable<any>) => min(),
+  [Operators.SwitchMap]: (obs$: Observable<any>) => switchMap(() => obs$),
+  [Operators.TakeUntil]: (obs$: Observable<any>) => takeUntil(obs$),
 };
 
 export function invokeOperator(
-  operator: Operations,
+  operator: Operators,
   input: Diagram,
   secondaryInput?: Diagram
 ): Diagram {
@@ -49,7 +49,7 @@ export function invokeOperator(
     const input$ = cold(input.diagram, input.values);
     const secondaryInput$ =
       secondaryInput && cold(secondaryInput.diagram, secondaryInput.values);
-    const rxjsOperator = OPERATION_CALC_MAP[operator](secondaryInput$!);
+    const rxjsOperator = OPERATOR_FN_MAP[operator](secondaryInput$!);
     const output$ = input$.pipe(rxjsOperator);
     expectObservable(output$).toBe('');
   });

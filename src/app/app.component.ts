@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Diagram } from './logic/diagram';
-import { invokeOperator, Operations } from './logic/operation-map';
+import { invokeOperator, Operators } from './logic/operation-map';
 
 @Component({
   selector: 'rx-root',
@@ -12,14 +12,14 @@ export class AppComponent implements OnInit {
   public secondaryInputDiagram?: Diagram = undefined;
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
-  public selectedOperation = Operations.First;
+  public selectedOperation = Operators.First;
   public numberOfTick = 5;
 
   public get hasSecondaryInputDiagram(): boolean {
     return this.secondaryInputDiagram != null;
   }
 
-  public get operations(): Operations[] {
+  public get operations(): Operators[] {
     return this.hasSecondaryInputDiagram ? BINARY_OPERATORS : UNARY_OPERATORS;
   }
 
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     this.operationChanged(this.operations[0]);
   }
 
-  public operationChanged(operation: Operations): void {
+  public operationChanged(operation: Operators): void {
     this.selectedOperation = operation;
     this.recalculateOutputMarbles();
   }
@@ -61,12 +61,12 @@ export class AppComponent implements OnInit {
   }
 }
 
-const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
+const UNARY_OPERATORS = [Operators.First, Operators.Max, Operators.Min];
 const BINARY_OPERATORS = [
-  Operations.ConcatWith,
-  Operations.Merge,
-  Operations.SwitchMap,
-  Operations.TakeUntil,
+  Operators.ConcatWith,
+  Operators.Merge,
+  Operators.SwitchMap,
+  Operators.TakeUntil,
 ];
 
 function getInitialMarbleDiagram(): Diagram {

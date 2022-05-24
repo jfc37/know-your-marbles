@@ -10,22 +10,23 @@ import { Marble } from '../logic/marble';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarbleValuePickerComponent {
-  public formGroup = new FormGroup({
-    terminal: new FormControl(false),
-    value: new FormControl(null),
-  });
+  public formControl = new FormControl(1);
 
   constructor(public dialogRef: MatDialogRef<MarbleValuePickerComponent>) {}
 
-  public emptyClicked(): void {
+  public blankClicked(): void {
     this.dialogRef.close(Marble.createEmpty());
   }
 
-  public valueClicked(): void {
-    const marble = Marble.create(
-      [this.formGroup.value.value],
-      this.formGroup.value.terminal
-    );
-    this.dialogRef.close(marble);
+  public completeClicked(): void {
+    this.dialogRef.close(Marble.createCompletion());
+  }
+
+  public emitClicked(): void {
+    this.dialogRef.close(Marble.create([this.formControl.value]));
+  }
+
+  public emitAndCompleteClicked(): void {
+    this.dialogRef.close(Marble.create([this.formControl.value], true));
   }
 }

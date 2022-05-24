@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Operations } from '../logic/operation-map';
+import { Operators } from '../logic/operation-map';
 
 @Component({
   selector: 'rx-operation',
@@ -18,10 +18,10 @@ import { Operations } from '../logic/operation-map';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationComponent implements OnInit, OnChanges {
-  @Input() public availableOperations!: Operations[];
-  @Input() public operation!: Operations;
+  @Input() public availableOperations!: Operators[];
+  @Input() public operation!: Operators;
 
-  @Output() public operationSelected = new EventEmitter<Operations>();
+  @Output() public operationSelected = new EventEmitter<Operators>();
 
   public formControl!: FormControl;
 
