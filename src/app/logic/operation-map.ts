@@ -7,6 +7,7 @@ import {
   takeUntil,
   mergeWith,
   min,
+  switchMap,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
@@ -18,6 +19,7 @@ export enum Operations {
   Max = 'max',
   Merge = 'merge',
   Min = 'min',
+  SwitchMap = 'switch map',
   TakeUntil = 'take until',
 }
 
@@ -27,6 +29,7 @@ const OPERATION_CALC_MAP = {
   [Operations.Max]: (obs$: Observable<any>) => max(),
   [Operations.Merge]: (obs$: Observable<any>) => mergeWith(obs$),
   [Operations.Min]: (obs$: Observable<any>) => min(),
+  [Operations.SwitchMap]: (obs$: Observable<any>) => switchMap(() => obs$),
   [Operations.TakeUntil]: (obs$: Observable<any>) => takeUntil(obs$),
 };
 

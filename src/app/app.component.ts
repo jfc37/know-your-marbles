@@ -65,6 +65,7 @@ const UNARY_OPERATORS = [Operations.First, Operations.Max, Operations.Min];
 const BINARY_OPERATORS = [
   Operations.ConcatWith,
   Operations.Merge,
+  Operations.SwitchMap,
   Operations.TakeUntil,
 ];
 
