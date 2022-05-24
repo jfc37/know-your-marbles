@@ -1,7 +1,7 @@
 import { first } from 'rxjs/operators';
 import { Diagram } from '../diagram';
 import { Operations } from '../operation-map';
-import { compareWithExpected, compareWithRxjs } from './operation.utils.spec';
+import { compareWithExpected, compareWithRxjs } from './test.utils';
 
 describe('first', () => {
   it('check "-----" has same output as rxjs', () => {

@@ -1,7 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { Diagram } from '../diagram';
 import { Operations } from '../operation-map';
-import { binaryCompareWithRxjs } from './operation.utils.spec';
+import { binaryCompareWithRxjs } from './test.utils';
 
 describe('take until', () => {
   it('check "abcde" | "----" has same output as rxjs', () => {
