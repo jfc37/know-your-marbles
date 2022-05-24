@@ -12,7 +12,7 @@ import { Marble } from '../logic/marble';
 export class MarbleValuePickerComponent {
   public formGroup = new FormGroup({
     terminal: new FormControl(false),
-    value: new FormControl(1),
+    value: new FormControl(null),
   });
 
   constructor(public dialogRef: MatDialogRef<MarbleValuePickerComponent>) {}
