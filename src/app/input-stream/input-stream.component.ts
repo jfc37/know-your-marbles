@@ -45,10 +45,10 @@ export class InputStreamComponent implements OnInit, OnChanges {
     let newValues = [...this.marbles];
     newValues[index] = marble;
 
-    // if updated value is terminal, remove marbles that follow
-    if (marble.completion) {
+    // if updated value is completion or error, remove marbles that follow
+    if (marble.completion || marble.error) {
       newValues = newValues.slice(0, index + 1);
-    } else if (this.marbles[index].completion) {
+    } else if (this.marbles[index].completion || this.marbles[index].error) {
       newValues = [
         ...newValues,
         ...[...Array(this.numberOfTicks - index - 1)].map(() =>

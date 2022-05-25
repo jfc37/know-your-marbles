@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Marble } from '../logic/marble';
 
@@ -20,6 +20,10 @@ export class MarbleValuePickerComponent {
 
   public completeClicked(): void {
     this.dialogRef.close(Marble.createCompletion());
+  }
+
+  public errorClicked(): void {
+    this.dialogRef.close(Marble.createError());
   }
 
   public emitClicked(): void {

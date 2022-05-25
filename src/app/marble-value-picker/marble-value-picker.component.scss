@@ -1,8 +1,9 @@
 :host {
   min-width: 800px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 2rem;
-  background-color: whitesmoke;
 }
 
 section {
@@ -14,6 +15,7 @@ section {
   align-items: center;
 
   border: 1px solid black;
+  background-color: whitesmoke;
 }
 
 .visual {
@@ -53,5 +55,27 @@ section {
 
   &.over-marble {
     position: absolute;
+  }
+}
+
+.error {
+  height: 5rem;
+  width: 5rem;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 0.12rem; /* cross thickness */
+    background-color: black;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
   }
 }
