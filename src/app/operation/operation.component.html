@@ -1,0 +1,5 @@
+<select name="operation" id="opertation" [formControl]="formControl">
+  <option *ngFor="let operation of availableOperations" [value]="operation">
+    {{ operation }}
+  </option>
+</select>

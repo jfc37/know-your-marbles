@@ -1,0 +1,8 @@
+<button (click)="openOptions()" [disabled]="readonly">
+  <div *ngIf="isEmpty" class="empty-marble"></div>
+  <div *ngIf="isTerminal" class="terminal"></div>
+  <div *ngIf="isError" class="error"></div>
+  <div *ngIf="isEmission" class="marble center-content">
+    {{ marbleValue }}
+  </div>
+</button>
