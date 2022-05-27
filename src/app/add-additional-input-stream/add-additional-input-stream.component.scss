@@ -5,4 +5,12 @@ button {
   position: absolute;
   left: calc(100vw - (var(--max-width) / 2));
   margin-top: -5.5rem;
+  margin-left: 1rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+  border: none;
+  background-color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
 }

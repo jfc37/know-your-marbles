@@ -18,6 +18,6 @@ export class AddAdditionalInputStreamComponent {
   @Output() public toggleSecondaryDiagram = new EventEmitter<void>();
 
   public get icon(): string {
-    return this.secondaryDiagramEnabled ? 'delete' : 'add';
+    return this.secondaryDiagramEnabled ? '-' : '+';
   }
 }

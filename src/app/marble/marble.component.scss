@@ -32,8 +32,8 @@ button {
 .empty-marble {
   margin: 0 auto;
   border-radius: 100%;
-  background-color: black;
-  border: solid 1px black;
+  background-color: var(--color-text);
+  border: solid 1px var(--color-text);
   height: calc(var(--size) * 0.2);
   width: calc(var(--size) * 0.2);
 }
@@ -41,7 +41,7 @@ button {
 .terminal {
   --terminal-width: calc(var(--size) * 0.06);
 
-  background-color: black;
+  background-color: var(--color-text);
   height: calc(var(--size) * 1.5);
   width: var(--terminal-width);
   position: absolute;
@@ -52,6 +52,7 @@ button {
 
 .error {
   transform: translateX(calc(var(--size) / 2 * -1));
+  margin-top: -0.1rem;
 
   &::before,
   &::after {
@@ -59,7 +60,7 @@ button {
     content: '';
     width: 100%;
     height: calc(var(--size) * 0.06); /* cross thickness */
-    background-color: black;
+    background-color: var(--color-text);
   }
 
   &::before {

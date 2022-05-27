@@ -4,12 +4,9 @@
   flex-direction: column;
 }
 
-.filler {
-  flex: 1;
-}
-
 .top {
   background-color: var(--green);
+  flex: 1;
 }
 
 h1 {
@@ -22,4 +19,5 @@ h1 {
 
 .bottom {
   background-color: var(--blue);
+  flex: 2;
 }
