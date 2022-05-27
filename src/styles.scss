@@ -121,3 +121,11 @@ input[type='number'] {
   padding-right: 3rem;
   border: dashed 3px black;
 }
+
+rx-marble:first-of-type .empty-marble {
+  margin: inherit;
+}
+
+rx-input-stream + rx-input-stream .timeline-wrapper {
+  border-top: none;
+}
