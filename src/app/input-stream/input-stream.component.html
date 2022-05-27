@@ -1,8 +1,11 @@
-<div class="timeline">
-  <rx-marble
-    *ngFor="let marble of marbles; let i = index"
-    [marble]="marble"
-    (marbleUpdated)="marbleUpdated(i, $event)"
-  ></rx-marble>
-  <div *ngFor="let voidTick of voidTicks" class="void-marble"></div>
+<div class="max-width-wrapper">
+  <div class="timeline-wrapper">
+    <rx-timeline></rx-timeline>
+    <rx-marble
+      *ngFor="let marble of marbles; let i = index"
+      [marble]="marble"
+      (marbleUpdated)="marbleUpdated(i, $event)"
+    ></rx-marble>
+    <div *ngFor="let voidTick of voidTicks" class="void-marble"></div>
+  </div>
 </div>

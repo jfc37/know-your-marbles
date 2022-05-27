@@ -15,7 +15,7 @@ section {
   align-items: center;
 
   border: 1px solid black;
-  background-color: whitesmoke;
+  background-color: var(--white);
 }
 
 .visual {
@@ -26,7 +26,7 @@ section {
 
 .marble {
   border-radius: 100%;
-  background-color: hotpink;
+  background-color: var(--red);
   height: 5rem;
   width: 5rem;
   color: white;

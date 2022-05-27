@@ -1,1 +1,8 @@
-<button (click)="toggleSecondaryDiagram.emit()">{{ buttonText }}</button>
+<button
+  mat-fab
+  color="primary"
+  aria-label="Example icon button with a delete icon"
+  (click)="toggleSecondaryDiagram.emit()"
+>
+  <mat-icon>{{ icon }}</mat-icon>
+</button>

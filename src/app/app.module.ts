@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { InputStreamComponent } from './input-stream/input-stream.component';
@@ -11,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-picker.component';
 import { AddAdditionalInputStreamComponent } from './add-additional-input-stream/add-additional-input-stream.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { AddAdditionalInputStreamComponent } from './add-additional-input-stream
     MarbleComponent,
     MarbleValuePickerComponent,
     AddAdditionalInputStreamComponent,
+    TimelineComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +32,8 @@ import { AddAdditionalInputStreamComponent } from './add-additional-input-stream
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

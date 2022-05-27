@@ -1,8 +1,11 @@
-<div class="timeline">
-  <rx-marble
-    *ngFor="let marble of marbles"
-    [readonly]="true"
-    [marble]="marble"
-  ></rx-marble>
-  <div *ngFor="let voidTick of voidTicks" class="void-marble"></div>
+<div class="max-width-wrapper">
+  <div class="full-width timeline-wrapper">
+    <rx-timeline></rx-timeline>
+    <rx-marble
+      *ngFor="let marble of marbles"
+      [readonly]="true"
+      [marble]="marble"
+    ></rx-marble>
+    <div *ngFor="let voidTick of voidTicks" class="void-marble"></div>
+  </div>
 </div>

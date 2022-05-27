@@ -70,11 +70,16 @@ h6 {
   isolation: isolate;
 }
 
-// App styles
-body {
-  background-image: url('./assets/blurry-gradient.svg');
-  background-size: cover;
+:root {
+  --max-width: 900px;
+  --green: #59c3c3;
+  --blue: #4062bb;
+  --white: #ebebeb;
+  --red: #f45b69;
+  --purple: #52489c;
 }
+
+// App styles
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -86,22 +91,29 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.max-width-wrapper {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.full-width {
+  width: var(--max-width);
+}
+
 .center-content {
   display: grid;
   justify-items: center;
   align-items: center;
 }
 
-.timeline {
+.timeline-wrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
-}
-
-.timeline::before {
-  content: '';
-  height: 0.2rem;
-  width: 100%;
-  background-color: black;
-  position: absolute;
-  top: 50%;
+  width: var(--max-width);
+  height: 8rem;
+  padding: 0.5rem 1rem;
+  padding-right: 3rem;
+  border: dashed 3px black;
 }

@@ -17,9 +17,7 @@ export class AddAdditionalInputStreamComponent {
 
   @Output() public toggleSecondaryDiagram = new EventEmitter<void>();
 
-  public get buttonText(): string {
-    return this.secondaryDiagramEnabled
-      ? 'Remove second diagram'
-      : 'Add second diagram';
+  public get icon(): string {
+    return this.secondaryDiagramEnabled ? 'delete' : 'add';
   }
 }
