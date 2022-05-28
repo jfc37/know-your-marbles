@@ -4,8 +4,10 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { Marble } from '../logic/marble';
 import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-picker.component';
 
@@ -15,7 +17,7 @@ import { MarbleValuePickerComponent } from '../marble-value-picker/marble-value-
   styleUrls: ['./marble.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MarbleComponent {
+export class MarbleComponent implements OnDestroy {
   @Input() public readonly = false;
   @Input() public marble!: Marble;
   @Output() public marbleUpdated = new EventEmitter<Marble>();
@@ -40,12 +42,20 @@ export class MarbleComponent {
     return this.marble.values.join('|');
   }
 
+  private destroy$ = new Subject<void>();
+
   constructor(public dialog: MatDialog) {}
 
   public openOptions(): void {
     this.dialog
       .open(MarbleValuePickerComponent)
       .afterClosed()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((value) => value != null && this.marbleUpdated.emit(value));
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
