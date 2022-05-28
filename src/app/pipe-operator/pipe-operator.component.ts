@@ -29,7 +29,10 @@ export class PipeOperatorComponent implements OnInit, OnChanges {
   @Input() public diagram?: Diagram;
   @Input() public operation!: Operators;
   @Input() public numberOfTicks!: number;
+  @Input() public showRemove!: boolean;
 
+  @Output() public addClicked = new EventEmitter<void>();
+  @Output() public removeClicked = new EventEmitter<void>();
   @Output() public operationSelected = new EventEmitter<Operators>();
   @Output() public diagramChanged = new EventEmitter<Diagram>();
 

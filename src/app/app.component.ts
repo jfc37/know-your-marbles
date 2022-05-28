@@ -10,7 +10,7 @@ import { invokeOperator, Operators } from './logic/operation-map';
 export class AppComponent implements OnInit {
   public inputDiagram: Diagram = getInitialMarbleDiagram();
   public pipes: { diagram?: Diagram; operation: Operators }[] = [
-    { diagram: undefined, operation: Operators.First },
+    getDefaultPipe(),
   ];
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
@@ -18,6 +18,18 @@ export class AppComponent implements OnInit {
   public operations = [...UNARY_OPERATORS, ...BINARY_OPERATORS];
 
   public ngOnInit(): void {
+    this.recalculateOutputMarbles();
+  }
+
+  public addPipe(index: number): void {
+    this.pipes.splice(index + 1, 0, getDefaultPipe());
+
+    this.recalculateOutputMarbles();
+  }
+
+  public removePipe(index: number): void {
+    this.pipes.splice(index, 1);
+
     this.recalculateOutputMarbles();
   }
 
@@ -63,4 +75,8 @@ const BINARY_OPERATORS = [
 
 function getInitialMarbleDiagram(): Diagram {
   return Diagram.createWithBlankTicks(5);
+}
+
+function getDefaultPipe() {
+  return { diagram: undefined, operation: Operators.First };
 }

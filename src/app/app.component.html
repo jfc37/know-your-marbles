@@ -13,6 +13,9 @@
   [diagram]="pipe.diagram"
   [operation]="pipe.operation"
   [numberOfTicks]="numberOfTick"
+  [showRemove]="i > 0"
+  (addClicked)="addPipe(i)"
+  (removeClicked)="removePipe(i)"
   (operationSelected)="operationChanged($event, i)"
   (diagramChanged)="pipeDiagramChanged($event, i)"
 ></rx-pipe-operator>
