@@ -7,16 +7,17 @@
 ></rx-input-stream>
 <rx-divider></rx-divider>
 <rx-pipe-operator
+  *ngFor="let pipe of pipes; let i = index"
   [availableOperations]="operations"
-  [hueAdjust]="1.2"
-  [diagram]="secondaryInputDiagram"
-  [operation]="selectedOperation"
+  [hueAdjust]="1.2 + (i * 2) / 10"
+  [diagram]="pipe.diagram"
+  [operation]="pipe.operation"
   [numberOfTicks]="numberOfTick"
-  (operationSelected)="operationChanged($event)"
-  (diagramChanged)="secondaryInputDiagramChanged($event)"
+  (operationSelected)="operationChanged($event, i)"
+  (diagramChanged)="pipeDiagramChanged($event, i)"
 ></rx-pipe-operator>
 <rx-output-stream
-  [hueAdjust]="1.4"
+  [hueAdjust]="1.2 + (pipes.length * 2) / 10"
   [diagram]="outputDiagram"
   [numberOfTicks]="numberOfTick"
 ></rx-output-stream>

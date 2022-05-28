@@ -9,16 +9,12 @@ import { invokeOperator, Operators } from './logic/operation-map';
 })
 export class AppComponent implements OnInit {
   public inputDiagram: Diagram = getInitialMarbleDiagram();
-  public secondaryInputDiagram?: Diagram = undefined;
+  public pipes: { diagram?: Diagram; operation: Operators }[] = [
+    { diagram: undefined, operation: Operators.First },
+  ];
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
-  public selectedOperation = Operators.First;
   public numberOfTick = 5;
-
-  public get hasSecondaryInputDiagram(): boolean {
-    return this.secondaryInputDiagram != null;
-  }
-
   public operations = [...UNARY_OPERATORS, ...BINARY_OPERATORS];
 
   public ngOnInit(): void {
@@ -30,29 +26,30 @@ export class AppComponent implements OnInit {
     this.recalculateOutputMarbles();
   }
 
-  public secondaryInputDiagramChanged(diagram: Diagram): void {
-    this.secondaryInputDiagram = diagram;
+  public pipeDiagramChanged(diagram: Diagram, index: number): void {
+    this.pipes[index].diagram = diagram;
+    this.pipes = [...this.pipes];
+
     this.recalculateOutputMarbles();
   }
 
-  public operationChanged(operation: Operators): void {
-    this.selectedOperation = operation;
+  public operationChanged(operation: Operators, index: number): void {
+    this.pipes[index].operation = operation;
 
     if (UNARY_OPERATORS.includes(operation)) {
-      this.secondaryInputDiagram = undefined;
-    } else if (!this.secondaryInputDiagram) {
-      this.secondaryInputDiagram = getInitialMarbleDiagram();
+      this.pipes[index].diagram = undefined;
+    } else if (!this.pipes[index].diagram) {
+      this.pipes[index].diagram = getInitialMarbleDiagram();
     }
+    this.pipes = [...this.pipes];
 
     this.recalculateOutputMarbles();
   }
 
   private recalculateOutputMarbles(): void {
-    this.outputDiagram = invokeOperator(
-      this.selectedOperation,
-      this.inputDiagram,
-      this.secondaryInputDiagram!
-    );
+    this.outputDiagram = this.pipes.reduce((inputDiagram, pipe) => {
+      return invokeOperator(pipe.operation, inputDiagram, pipe.diagram);
+    }, this.inputDiagram);
   }
 }
 
