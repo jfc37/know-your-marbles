@@ -1,27 +1,22 @@
 <div class="top"></div>
 <h1>Know your marbles</h1>
 <rx-input-stream
-  [diagram]="primaryInputDiagram"
+  [diagram]="inputDiagram"
   [numberOfTicks]="numberOfTick"
   (diagramUpdated)="primaryInputDiagramChanged($event)"
 ></rx-input-stream>
-<rx-input-stream
-  *ngIf="hasSecondaryInputDiagram"
-  [diagram]="secondaryInputDiagram!"
-  [numberOfTicks]="numberOfTick"
-  (diagramUpdated)="secondaryInputDiagramChanged($event)"
-></rx-input-stream>
-<rx-add-additional-input-stream
-  [secondaryDiagramEnabled]="hasSecondaryInputDiagram"
-  (toggleSecondaryDiagram)="toggleSecondaryInputDiagram()"
-></rx-add-additional-input-stream>
-<rx-operation
+<rx-divider></rx-divider>
+<rx-pipe-operator
   [availableOperations]="operations"
+  [hueAdjust]="1.2"
+  [diagram]="secondaryInputDiagram"
   [operation]="selectedOperation"
+  [numberOfTicks]="numberOfTick"
   (operationSelected)="operationChanged($event)"
-></rx-operation>
+  (diagramChanged)="secondaryInputDiagramChanged($event)"
+></rx-pipe-operator>
 <rx-output-stream
+  [hueAdjust]="1.4"
   [diagram]="outputDiagram"
   [numberOfTicks]="numberOfTick"
 ></rx-output-stream>
-<div class="bottom"></div>

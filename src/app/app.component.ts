@@ -8,7 +8,7 @@ import { invokeOperator, Operators } from './logic/operation-map';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public primaryInputDiagram: Diagram = getInitialMarbleDiagram();
+  public inputDiagram: Diagram = getInitialMarbleDiagram();
   public secondaryInputDiagram?: Diagram = undefined;
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
@@ -19,16 +19,14 @@ export class AppComponent implements OnInit {
     return this.secondaryInputDiagram != null;
   }
 
-  public get operations(): Operators[] {
-    return this.hasSecondaryInputDiagram ? BINARY_OPERATORS : UNARY_OPERATORS;
-  }
+  public operations = [...UNARY_OPERATORS, ...BINARY_OPERATORS];
 
   public ngOnInit(): void {
     this.recalculateOutputMarbles();
   }
 
   public primaryInputDiagramChanged(diagram: Diagram): void {
-    this.primaryInputDiagram = diagram;
+    this.inputDiagram = diagram;
     this.recalculateOutputMarbles();
   }
 
@@ -37,25 +35,22 @@ export class AppComponent implements OnInit {
     this.recalculateOutputMarbles();
   }
 
-  public toggleSecondaryInputDiagram(): void {
-    if (this.secondaryInputDiagram) {
+  public operationChanged(operation: Operators): void {
+    this.selectedOperation = operation;
+
+    if (UNARY_OPERATORS.includes(operation)) {
       this.secondaryInputDiagram = undefined;
-    } else {
+    } else if (!this.secondaryInputDiagram) {
       this.secondaryInputDiagram = getInitialMarbleDiagram();
     }
 
-    this.operationChanged(this.operations[0]);
-  }
-
-  public operationChanged(operation: Operators): void {
-    this.selectedOperation = operation;
     this.recalculateOutputMarbles();
   }
 
   private recalculateOutputMarbles(): void {
     this.outputDiagram = invokeOperator(
       this.selectedOperation,
-      this.primaryInputDiagram,
+      this.inputDiagram,
       this.secondaryInputDiagram!
     );
   }

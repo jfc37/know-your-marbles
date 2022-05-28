@@ -1,6 +1,12 @@
 :host {
   width: 100%;
   display: grid;
+  background-color: hsla(
+    calc(var(--background-h) * var(--hue-adjust)),
+    var(--background-s),
+    var(--background-l),
+    var(--background-a)
+  );
 }
 
 .wrapper {
@@ -10,13 +16,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-select {
-  z-index: 5;
-  width: 10rem;
-  height: 3rem;
-  font-size: 1.6rem;
-  text-align: center;
-  border-radius: 0.25rem;
 }

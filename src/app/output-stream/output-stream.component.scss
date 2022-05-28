@@ -2,7 +2,12 @@
   width: 100%;
   display: grid;
 
-  background-color: var(--blue);
+  background-color: hsla(
+    calc(var(--background-h) * (var(--hue-adjust))),
+    var(--background-s),
+    var(--background-l),
+    var(--background-a)
+  );
 }
 
 .void-marble {

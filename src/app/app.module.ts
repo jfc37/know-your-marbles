@@ -14,6 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MarbleValuePickerComponent } from './marble-value-picker/marble-value-picker.component';
 import { AddAdditionalInputStreamComponent } from './add-additional-input-stream/add-additional-input-stream.component';
 import { TimelineComponent } from './timeline/timeline.component';
+import { PipeOperatorComponent } from './pipe-operator/pipe-operator.component';
+import { DividerComponent } from './divider/divider.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { TimelineComponent } from './timeline/timeline.component';
     MarbleValuePickerComponent,
     AddAdditionalInputStreamComponent,
     TimelineComponent,
+    PipeOperatorComponent,
+    DividerComponent,
   ],
   imports: [
     BrowserModule,

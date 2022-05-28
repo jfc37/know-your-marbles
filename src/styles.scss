@@ -73,11 +73,17 @@ h6 {
 :root {
   --max-width: 900px;
   --color-text: hsl(222deg, 22%, 15%);
-  --green: #59c3c3;
+  --green: hsl(180, 47%, 56%);
   --blue: #4062bb;
   --white: #ebebeb;
   --red: #f45b69;
   --purple: #52489c;
+  --background-h: 180;
+  --background-s: 47%;
+  --background-l: 56%;
+  --background-a: 100%;
+  --base-background: hsla(180, 47%, 56%, 100%);
+  --hue-adjust: 1;
 }
 
 // App styles

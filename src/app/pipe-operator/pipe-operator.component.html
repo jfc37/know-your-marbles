@@ -1,0 +1,12 @@
+<rx-operation
+  [availableOperations]="availableOperations"
+  [operation]="operation"
+  (operationSelected)="operationSelected.emit($event)"
+></rx-operation>
+<rx-input-stream
+  *ngIf="diagram"
+  [diagram]="diagram"
+  [numberOfTicks]="numberOfTicks"
+  (diagramUpdated)="diagramChanged.emit($event)"
+></rx-input-stream>
+<rx-divider></rx-divider>

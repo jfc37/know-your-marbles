@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  HostBinding,
 } from '@angular/core';
 import { Diagram } from '../logic/diagram';
 import { Marble } from '../logic/marble';
@@ -16,6 +17,10 @@ import { Marble } from '../logic/marble';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutputStreamComponent implements OnInit, OnChanges {
+  @HostBinding('style.--hue-adjust')
+  @Input()
+  public hueAdjust!: number;
+
   @Input() public diagram!: Diagram;
   @Input() public numberOfTicks!: number;
 

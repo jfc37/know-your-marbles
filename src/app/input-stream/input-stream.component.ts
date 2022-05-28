@@ -7,6 +7,7 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  HostBinding,
 } from '@angular/core';
 import { Diagram } from '../logic/diagram';
 import { Marble } from '../logic/marble';
