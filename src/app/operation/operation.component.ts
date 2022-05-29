@@ -35,15 +35,23 @@ export class OperationComponent implements OnInit, OnChanges, OnDestroy {
   public formControl!: FormControl;
   public argumentFormControl!: FormControl;
 
-  public get takesArgument(): boolean {
-    return OPERATOR_ARGUMENT_MAP[this.operation] != OperatorArgument.None;
+  public get isValueArgument(): boolean {
+    return OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Value;
+  }
+
+  public get isEvaluationArgument(): boolean {
+    return (
+      OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Evaluation
+    );
   }
 
   private destroy$ = new Subject<void>();
 
   public ngOnInit(): void {
     this.formControl = new FormControl(this.operation);
-    this.argumentFormControl = new FormControl(this.argument);
+    this.argumentFormControl = new FormControl(this.argument, {
+      updateOn: 'blur',
+    });
 
     this.formControl.valueChanges
       .pipe(takeUntil(this.destroy$))

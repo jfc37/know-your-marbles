@@ -9,6 +9,7 @@ import {
   min,
   switchMap,
   startWith,
+  filter,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
@@ -16,6 +17,7 @@ import { messagesToDiagram } from './marble.utils';
 
 export enum Operators {
   ConcatWith = 'concat with',
+  Filter = 'filter',
   First = 'first',
   Max = 'max',
   Merge = 'merge',
@@ -27,11 +29,13 @@ export enum Operators {
 
 export enum OperatorArgument {
   None,
+  Evaluation,
   Value,
 }
 
 export const OPERATOR_ARGUMENT_MAP = {
   [Operators.ConcatWith]: OperatorArgument.None,
+  [Operators.Filter]: OperatorArgument.Evaluation,
   [Operators.First]: OperatorArgument.None,
   [Operators.Max]: OperatorArgument.None,
   [Operators.Merge]: OperatorArgument.None,
@@ -43,6 +47,7 @@ export const OPERATOR_ARGUMENT_MAP = {
 
 export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
   [Operators.ConcatWith]: undefined,
+  [Operators.Filter]: 'x > 5',
   [Operators.First]: undefined,
   [Operators.Max]: undefined,
   [Operators.Merge]: undefined,
@@ -55,6 +60,8 @@ export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
 const OPERATOR_FN_MAP = {
   [Operators.ConcatWith]: (obs$: Observable<any>, argument: string) =>
     concatWith(obs$),
+  [Operators.Filter]: (obs$: Observable<any>, argument: string) =>
+    filter<any>(argumentToFn(argument)),
   [Operators.First]: (obs$: Observable<any>, argument: string) => first(),
   [Operators.Max]: (obs$: Observable<any>, argument: string) => max(),
   [Operators.Merge]: (obs$: Observable<any>, argument: string) =>
@@ -67,6 +74,10 @@ const OPERATOR_FN_MAP = {
   [Operators.TakeUntil]: (obs$: Observable<any>, argument: string) =>
     takeUntil(obs$),
 };
+
+function argumentToFn(argument: string): () => boolean {
+  return Function('x', 'return ' + argument) as () => boolean;
+}
 
 export function invokeOperator(
   operator: Operators,

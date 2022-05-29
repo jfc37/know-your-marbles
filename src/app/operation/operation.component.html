@@ -6,9 +6,19 @@
       </option>
     </select>
 
-    <ng-container *ngIf="takesArgument">
+    <ng-container *ngIf="isValueArgument">
       <div class="argument">(</div>
       <input type="text" [formControl]="argumentFormControl" />
+      <div class="argument">)</div>
+    </ng-container>
+
+    <ng-container *ngIf="isEvaluationArgument">
+      <div class="argument">(x =></div>
+      <input
+        class="evaluation"
+        type="text"
+        [formControl]="argumentFormControl"
+      />
       <div class="argument">)</div>
     </ng-container>
   </div>
