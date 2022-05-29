@@ -92,6 +92,7 @@ const UNARY_OPERATORS = [
   Operators.StartWith,
 ];
 const BINARY_OPERATORS = [
+  Operators.CombineLatestWith,
   Operators.ConcatWith,
   Operators.Merge,
   Operators.SwitchMap,

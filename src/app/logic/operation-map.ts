@@ -11,12 +11,14 @@ import {
   startWith,
   filter,
   map,
+  combineLatestWith,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
 import { messagesToDiagram } from './marble.utils';
 
 export enum Operators {
+  CombineLatestWith = 'combine latest with',
   ConcatWith = 'concat with',
   Filter = 'filter',
   First = 'first',
@@ -37,6 +39,7 @@ export enum OperatorArgument {
 }
 
 export const OPERATOR_ARGUMENT_MAP = {
+  [Operators.CombineLatestWith]: OperatorArgument.None,
   [Operators.ConcatWith]: OperatorArgument.None,
   [Operators.Filter]: OperatorArgument.Evaluation,
   [Operators.First]: OperatorArgument.None,
@@ -50,6 +53,7 @@ export const OPERATOR_ARGUMENT_MAP = {
 };
 
 export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
+  [Operators.CombineLatestWith]: undefined,
   [Operators.ConcatWith]: undefined,
   [Operators.Filter]: 'x > 5',
   [Operators.First]: undefined,
@@ -63,6 +67,8 @@ export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
 };
 
 const OPERATOR_FN_MAP = {
+  [Operators.CombineLatestWith]: (obs$: Observable<any>, argument: string) =>
+    combineLatestWith(obs$),
   [Operators.ConcatWith]: (obs$: Observable<any>, argument: string) =>
     concatWith(obs$),
   [Operators.Filter]: (obs$: Observable<any>, argument: string) =>
@@ -83,7 +89,7 @@ const OPERATOR_FN_MAP = {
 };
 
 function argumentToFn(argument: string): () => boolean {
-  return Function('x', 'return ' + argument) as () => boolean;
+  return Function('x', 'y', 'return ' + argument) as () => boolean;
 }
 
 export function invokeOperator(
