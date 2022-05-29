@@ -1,6 +1,3 @@
-<button *ngIf="showRemove" class="remove-button" (click)="removeClicked.emit()">
-  -
-</button>
 <rx-operation
   [availableOperations]="availableOperations"
   [operation]="operation"
@@ -13,4 +10,7 @@
   (diagramUpdated)="diagramChanged.emit($event)"
 ></rx-input-stream>
 <rx-divider></rx-divider>
+<button *ngIf="showRemove" class="remove-button" (click)="removeClicked.emit()">
+  -
+</button>
 <button class="add-button" (click)="addClicked.emit()">+</button>

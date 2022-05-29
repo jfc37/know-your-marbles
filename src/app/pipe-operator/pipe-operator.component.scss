@@ -32,11 +32,11 @@ button {
 }
 
 .add-button {
-  left: calc(100vw - (var(--max-width) / 2));
+  right: calc((100vw - var(--max-width)) / 2);
   margin-left: 1rem;
 }
 
 .remove-button {
-  right: calc(100vw - (var(--max-width) / 2));
+  left: calc((100vw - var(--max-width)) / 2);
   margin-right: 1rem;
 }
