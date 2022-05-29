@@ -1,4 +1,39 @@
 <section>
+  <form>
+    <div class="visual center-content">
+      <div class="marble">
+        <input
+          type="number"
+          name="value"
+          id="value"
+          [formControl]="formControl"
+        />
+      </div>
+    </div>
+    <div class="action">
+      <button (click)="emitClicked()">Emit</button>
+    </div>
+  </form>
+</section>
+<section>
+  <form>
+    <div class="visual center-content">
+      <div class="marble">
+        <input
+          type="number"
+          name="value"
+          id="value"
+          [formControl]="formControl"
+        />
+      </div>
+      <div class="completion over-marble"></div>
+    </div>
+    <div class="action">
+      <button (click)="emitAndCompleteClicked()">Emit & Complete</button>
+    </div>
+  </form>
+</section>
+<section>
   <div class="visual center-content">
     <div class="empty-marble"></div>
   </div>
@@ -20,36 +55,5 @@
   </div>
   <div class="action">
     <button (click)="errorClicked()">Error</button>
-  </div>
-</section>
-<section>
-  <div class="visual center-content">
-    <div class="marble">
-      <input
-        type="number"
-        name="value"
-        id="value"
-        [formControl]="formControl"
-      />
-    </div>
-  </div>
-  <div class="action">
-    <button (click)="emitClicked()">Emit</button>
-  </div>
-</section>
-<section>
-  <div class="visual center-content">
-    <div class="marble">
-      <input
-        type="number"
-        name="value"
-        id="value"
-        [formControl]="formControl"
-      />
-    </div>
-    <div class="completion over-marble"></div>
-  </div>
-  <div class="action">
-    <button (click)="emitAndCompleteClicked()">Emit & Complete</button>
   </div>
 </section>
