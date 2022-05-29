@@ -2,23 +2,7 @@ import { TestMessage } from 'rxjs/internal/testing/TestMessage';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
 import { messagesToDiagram } from './marble.utils';
-import {
-  DEFAULT_OPERATOR_ARGUMENT_MAP,
-  OperatorArgument,
-  Operators,
-  OPERATOR_ARGUMENT_MAP,
-  OPERATOR_FN_MAP,
-} from './operators';
-
-export function getDefaultArgumentForOperator(operator: Operators): string {
-  return DEFAULT_OPERATOR_ARGUMENT_MAP[operator] || undefined;
-}
-
-export function getArgumentTypeForOperator(
-  operator: Operators
-): OperatorArgument {
-  return OPERATOR_ARGUMENT_MAP[operator] || OperatorArgument.None;
-}
+import { Operators, OPERATOR_FN_MAP } from './operators';
 
 export function invokeOperator(
   operator: Operators,

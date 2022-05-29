@@ -12,8 +12,11 @@ import {
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { getArgumentTypeForOperator } from '../logic/operation-map';
-import { OperatorArgument, Operators } from '../logic/operators';
+import {
+  OperatorArgument,
+  Operators,
+  OPERATOR_ARGUMENT_MAP,
+} from '../logic/operators';
 
 @Component({
   selector: 'rx-operation',
@@ -80,4 +83,8 @@ export class OperationComponent implements OnInit, OnChanges, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+}
+
+function getArgumentTypeForOperator(operator: Operators): OperatorArgument {
+  return OPERATOR_ARGUMENT_MAP[operator] || OperatorArgument.None;
 }

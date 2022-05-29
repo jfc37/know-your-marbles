@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Diagram } from './logic/diagram';
+import { invokeOperator } from './logic/invokie-operator';
 import {
-  getDefaultArgumentForOperator,
-  invokeOperator,
-} from './logic/operation-map';
-import { Operators, Pipe } from './logic/operators';
+  DEFAULT_OPERATOR_ARGUMENT_MAP,
+  Operators,
+  Pipe,
+} from './logic/operators';
 
 @Component({
   selector: 'rx-root',
@@ -106,4 +107,8 @@ function getInitialMarbleDiagram(): Diagram {
 
 function getDefaultPipe(): Pipe {
   return { diagram: undefined, operation: Operators.First };
+}
+
+function getDefaultArgumentForOperator(operator: Operators): string {
+  return DEFAULT_OPERATOR_ARGUMENT_MAP[operator] || undefined;
 }
