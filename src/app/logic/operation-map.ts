@@ -12,10 +12,17 @@ import {
   filter,
   map,
   combineLatestWith,
+  raceWith,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
 import { messagesToDiagram } from './marble.utils';
+
+export interface Pipe {
+  operation: Operators;
+  diagram?: Diagram;
+  argument?: string;
+}
 
 export enum Operators {
   CombineLatestWith = 'combine latest with',
@@ -26,6 +33,7 @@ export enum Operators {
   Max = 'max',
   Merge = 'merge',
   Min = 'min',
+  RaceWith = 'race with',
   StartWith = 'start with',
   SwitchMap = 'switch map',
   TakeUntil = 'take until',
@@ -47,6 +55,7 @@ export const OPERATOR_ARGUMENT_MAP = {
   [Operators.Max]: OperatorArgument.None,
   [Operators.Merge]: OperatorArgument.None,
   [Operators.Min]: OperatorArgument.None,
+  [Operators.RaceWith]: OperatorArgument.None,
   [Operators.StartWith]: OperatorArgument.Value,
   [Operators.SwitchMap]: OperatorArgument.None,
   [Operators.TakeUntil]: OperatorArgument.None,
@@ -61,6 +70,7 @@ export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
   [Operators.Max]: undefined,
   [Operators.Merge]: undefined,
   [Operators.Min]: undefined,
+  [Operators.RaceWith]: undefined,
   [Operators.StartWith]: '2',
   [Operators.SwitchMap]: undefined,
   [Operators.TakeUntil]: undefined,
@@ -80,6 +90,8 @@ const OPERATOR_FN_MAP = {
   [Operators.Merge]: (obs$: Observable<any>, argument: string) =>
     mergeWith(obs$),
   [Operators.Min]: (obs$: Observable<any>, argument: string) => min(),
+  [Operators.RaceWith]: (obs$: Observable<any>, argument: string) =>
+    raceWith(obs$),
   [Operators.StartWith]: (obs$: Observable<any>, argument: string) =>
     startWith(argument),
   [Operators.SwitchMap]: (obs$: Observable<any>, argument: string) =>

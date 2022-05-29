@@ -4,6 +4,7 @@ import {
   DEFAULT_OPERATOR_ARGUMENT_MAP,
   invokeOperator,
   Operators,
+  Pipe,
 } from './logic/operation-map';
 
 @Component({
@@ -13,15 +14,13 @@ import {
 })
 export class AppComponent implements OnInit {
   public inputDiagram: Diagram = getInitialMarbleDiagram();
-  public pipes: {
-    diagram?: Diagram;
-    operation: Operators;
-    argument?: string;
-  }[] = [getDefaultPipe()];
+  public pipes = [getDefaultPipe()];
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
   public numberOfTick = 5;
-  public operations = [...UNARY_OPERATORS, ...BINARY_OPERATORS];
+  public operations = [...UNARY_OPERATORS, ...BINARY_OPERATORS].sort((a, b) =>
+    a < b ? -1 : 1
+  );
 
   public ngOnInit(): void {
     this.recalculateOutputMarbles();
@@ -91,10 +90,12 @@ const UNARY_OPERATORS = [
   Operators.Min,
   Operators.StartWith,
 ];
+
 const BINARY_OPERATORS = [
   Operators.CombineLatestWith,
   Operators.ConcatWith,
   Operators.Merge,
+  Operators.RaceWith,
   Operators.SwitchMap,
   Operators.TakeUntil,
 ];
@@ -103,6 +104,6 @@ function getInitialMarbleDiagram(): Diagram {
   return Diagram.createWithBlankTicks(5);
 }
 
-function getDefaultPipe() {
+function getDefaultPipe(): Pipe {
   return { diagram: undefined, operation: Operators.First };
 }
