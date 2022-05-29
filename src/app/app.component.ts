@@ -86,6 +86,7 @@ export class AppComponent implements OnInit {
 const UNARY_OPERATORS = [
   Operators.Filter,
   Operators.First,
+  Operators.Map,
   Operators.Max,
   Operators.Min,
   Operators.StartWith,

@@ -12,7 +12,7 @@
       <div class="argument">)</div>
     </ng-container>
 
-    <ng-container *ngIf="isEvaluationArgument">
+    <ng-container *ngIf="isEvaluationArgument || isProjectionArgument">
       <div class="argument">(x =></div>
       <input
         class="evaluation"

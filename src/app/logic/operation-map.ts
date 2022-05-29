@@ -10,6 +10,7 @@ import {
   switchMap,
   startWith,
   filter,
+  map,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
@@ -19,6 +20,7 @@ export enum Operators {
   ConcatWith = 'concat with',
   Filter = 'filter',
   First = 'first',
+  Map = 'map',
   Max = 'max',
   Merge = 'merge',
   Min = 'min',
@@ -30,6 +32,7 @@ export enum Operators {
 export enum OperatorArgument {
   None,
   Evaluation,
+  Projection,
   Value,
 }
 
@@ -37,6 +40,7 @@ export const OPERATOR_ARGUMENT_MAP = {
   [Operators.ConcatWith]: OperatorArgument.None,
   [Operators.Filter]: OperatorArgument.Evaluation,
   [Operators.First]: OperatorArgument.None,
+  [Operators.Map]: OperatorArgument.Projection,
   [Operators.Max]: OperatorArgument.None,
   [Operators.Merge]: OperatorArgument.None,
   [Operators.Min]: OperatorArgument.None,
@@ -49,6 +53,7 @@ export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
   [Operators.ConcatWith]: undefined,
   [Operators.Filter]: 'x > 5',
   [Operators.First]: undefined,
+  [Operators.Map]: 'x + 1',
   [Operators.Max]: undefined,
   [Operators.Merge]: undefined,
   [Operators.Min]: undefined,
@@ -63,6 +68,8 @@ const OPERATOR_FN_MAP = {
   [Operators.Filter]: (obs$: Observable<any>, argument: string) =>
     filter<any>(argumentToFn(argument)),
   [Operators.First]: (obs$: Observable<any>, argument: string) => first(),
+  [Operators.Map]: (obs$: Observable<any>, argument: string) =>
+    map(argumentToFn(argument)),
   [Operators.Max]: (obs$: Observable<any>, argument: string) => max(),
   [Operators.Merge]: (obs$: Observable<any>, argument: string) =>
     mergeWith(obs$),

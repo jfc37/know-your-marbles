@@ -45,6 +45,12 @@ export class OperationComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
+  public get isProjectionArgument(): boolean {
+    return (
+      OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Projection
+    );
+  }
+
   private destroy$ = new Subject<void>();
 
   public ngOnInit(): void {
