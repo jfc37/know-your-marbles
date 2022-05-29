@@ -64,11 +64,10 @@ export class Diagram {
     } else if (startOfTick == MarbleSymbol.Group) {
       const openingIndex = index;
       const closingIndex = this.diagram.indexOf(')', index);
-      this.diagram.substring(openingIndex + 1, closingIndex);
       const values = this.diagram.substring(openingIndex + 1, closingIndex);
       return {
         marble: Marble.create(
-          [this.values[values[0]], this.values[values[1]]],
+          values.split('').map((value) => this.values[value]),
           values.includes('|')
         ),
         nextTickIndex: closingIndex + 1,

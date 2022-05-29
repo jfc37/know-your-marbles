@@ -79,6 +79,18 @@ describe('diagramToMarbles', () => {
     expect(marbles[0].completion).toBeFalse();
   });
 
+  it('should map (abc)', () => {
+    const diagram = Diagram.create('(abc)', { a: 1, b: 2, c: 3 });
+
+    const marbles = diagram.toMarbles();
+
+    expect(marbles.length).toBe(1);
+    expect(marbles[0].values[0]).toBe(1);
+    expect(marbles[0].values[1]).toBe(2);
+    expect(marbles[0].values[2]).toBe(3);
+    expect(marbles[0].completion).toBeFalse();
+  });
+
   it('should map (ab|)', () => {
     const diagram = Diagram.create('(ab|)', { a: 1, b: 2 });
 
