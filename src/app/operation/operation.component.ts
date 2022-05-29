@@ -12,11 +12,8 @@ import {
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {
-  getArgumentTypeForOperator,
-  OperatorArgument,
-  Operators,
-} from '../logic/operation-map';
+import { getArgumentTypeForOperator } from '../logic/operation-map';
+import { OperatorArgument, Operators } from '../logic/operators';
 
 @Component({
   selector: 'rx-operation',

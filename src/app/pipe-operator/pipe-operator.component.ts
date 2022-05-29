@@ -7,7 +7,7 @@ import {
   HostBinding,
 } from '@angular/core';
 import { Diagram } from '../logic/diagram';
-import { Operators } from '../logic/operation-map';
+import { Operators } from '../logic/operators';
 
 @Component({
   selector: 'rx-pipe-operator',

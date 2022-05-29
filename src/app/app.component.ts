@@ -3,9 +3,8 @@ import { Diagram } from './logic/diagram';
 import {
   getDefaultArgumentForOperator,
   invokeOperator,
-  Operators,
-  Pipe,
 } from './logic/operation-map';
+import { Operators, Pipe } from './logic/operators';
 
 @Component({
   selector: 'rx-root',
