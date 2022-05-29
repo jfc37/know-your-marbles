@@ -83,6 +83,10 @@ export class AppComponent implements OnInit {
 }
 
 const UNARY_OPERATORS = [
+  Operators.Delay,
+  Operators.DebounceTime,
+  Operators.Distinct,
+  Operators.DistinctUntilChanged,
   Operators.Filter,
   Operators.First,
   Operators.Map,
@@ -92,6 +96,7 @@ const UNARY_OPERATORS = [
 ];
 
 const BINARY_OPERATORS = [
+  Operators.CatchError,
   Operators.CombineLatestWith,
   Operators.ConcatWith,
   Operators.Merge,
