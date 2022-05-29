@@ -13,6 +13,7 @@ import {
   map,
   combineLatestWith,
   raceWith,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
@@ -37,6 +38,7 @@ export enum Operators {
   StartWith = 'start with',
   SwitchMap = 'switch map',
   TakeUntil = 'take until',
+  WithLatestFrom = 'with latest from',
 }
 
 export enum OperatorArgument {
@@ -59,6 +61,7 @@ export const OPERATOR_ARGUMENT_MAP = {
   [Operators.StartWith]: OperatorArgument.Value,
   [Operators.SwitchMap]: OperatorArgument.None,
   [Operators.TakeUntil]: OperatorArgument.None,
+  [Operators.WithLatestFrom]: OperatorArgument.None,
 };
 
 export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
@@ -74,6 +77,7 @@ export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
   [Operators.StartWith]: '2',
   [Operators.SwitchMap]: undefined,
   [Operators.TakeUntil]: undefined,
+  [Operators.WithLatestFrom]: undefined,
 };
 
 const OPERATOR_FN_MAP = {
@@ -98,6 +102,8 @@ const OPERATOR_FN_MAP = {
     switchMap(() => obs$),
   [Operators.TakeUntil]: (obs$: Observable<any>, argument: string) =>
     takeUntil(obs$),
+  [Operators.WithLatestFrom]: (obs$: Observable<any>, argument: string) =>
+    withLatestFrom(obs$),
 };
 
 function argumentToFn(argument: string): () => boolean {

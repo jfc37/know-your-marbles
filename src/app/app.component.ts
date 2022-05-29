@@ -98,6 +98,7 @@ const BINARY_OPERATORS = [
   Operators.RaceWith,
   Operators.SwitchMap,
   Operators.TakeUntil,
+  Operators.WithLatestFrom,
 ];
 
 function getInitialMarbleDiagram(): Diagram {
