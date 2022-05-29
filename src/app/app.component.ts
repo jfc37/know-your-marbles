@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Diagram } from './logic/diagram';
 import {
-  DEFAULT_OPERATOR_ARGUMENT_MAP,
+  getDefaultArgumentForOperator,
   invokeOperator,
   Operators,
   Pipe,
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
 
   public operationChanged(operation: Operators, index: number): void {
     this.pipes[index].operation = operation;
-    this.pipes[index].argument = DEFAULT_OPERATOR_ARGUMENT_MAP[operation];
+    this.pipes[index].argument = getDefaultArgumentForOperator(operation);
 
     if (UNARY_OPERATORS.includes(operation)) {
       this.pipes[index].diagram = undefined;

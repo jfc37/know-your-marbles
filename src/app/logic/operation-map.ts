@@ -48,37 +48,27 @@ export enum OperatorArgument {
   Value,
 }
 
-export const OPERATOR_ARGUMENT_MAP = {
-  [Operators.CombineLatestWith]: OperatorArgument.None,
-  [Operators.ConcatWith]: OperatorArgument.None,
+const OPERATOR_ARGUMENT_MAP: any = {
   [Operators.Filter]: OperatorArgument.Evaluation,
-  [Operators.First]: OperatorArgument.None,
   [Operators.Map]: OperatorArgument.Projection,
-  [Operators.Max]: OperatorArgument.None,
-  [Operators.Merge]: OperatorArgument.None,
-  [Operators.Min]: OperatorArgument.None,
-  [Operators.RaceWith]: OperatorArgument.None,
   [Operators.StartWith]: OperatorArgument.Value,
-  [Operators.SwitchMap]: OperatorArgument.None,
-  [Operators.TakeUntil]: OperatorArgument.None,
-  [Operators.WithLatestFrom]: OperatorArgument.None,
 };
 
-export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
-  [Operators.CombineLatestWith]: undefined,
-  [Operators.ConcatWith]: undefined,
+const DEFAULT_OPERATOR_ARGUMENT_MAP: any = {
   [Operators.Filter]: 'x > 5',
-  [Operators.First]: undefined,
   [Operators.Map]: 'x + 1',
-  [Operators.Max]: undefined,
-  [Operators.Merge]: undefined,
-  [Operators.Min]: undefined,
-  [Operators.RaceWith]: undefined,
   [Operators.StartWith]: '2',
-  [Operators.SwitchMap]: undefined,
-  [Operators.TakeUntil]: undefined,
-  [Operators.WithLatestFrom]: undefined,
 };
+
+export function getDefaultArgumentForOperator(operator: Operators): string {
+  return DEFAULT_OPERATOR_ARGUMENT_MAP[operator] || undefined;
+}
+
+export function getArgumentTypeForOperator(
+  operator: Operators
+): OperatorArgument {
+  return OPERATOR_ARGUMENT_MAP[operator] || OperatorArgument.None;
+}
 
 const OPERATOR_FN_MAP = {
   [Operators.CombineLatestWith]: (obs$: Observable<any>, argument: string) =>

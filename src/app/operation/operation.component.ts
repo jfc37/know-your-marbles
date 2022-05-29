@@ -13,9 +13,9 @@ import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
+  getArgumentTypeForOperator,
   OperatorArgument,
   Operators,
-  OPERATOR_ARGUMENT_MAP,
 } from '../logic/operation-map';
 
 @Component({
@@ -36,18 +36,20 @@ export class OperationComponent implements OnInit, OnChanges, OnDestroy {
   public argumentFormControl!: FormControl;
 
   public get isValueArgument(): boolean {
-    return OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Value;
+    return (
+      getArgumentTypeForOperator(this.operation) === OperatorArgument.Value
+    );
   }
 
   public get isEvaluationArgument(): boolean {
     return (
-      OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Evaluation
+      getArgumentTypeForOperator(this.operation) === OperatorArgument.Evaluation
     );
   }
 
   public get isProjectionArgument(): boolean {
     return (
-      OPERATOR_ARGUMENT_MAP[this.operation] === OperatorArgument.Projection
+      getArgumentTypeForOperator(this.operation) === OperatorArgument.Projection
     );
   }
 
