@@ -5,5 +5,11 @@
         {{ operation }}
       </option>
     </select>
+
+    <ng-container *ngIf="takesArgument">
+      <div class="argument">(</div>
+      <input type="text" [formControl]="argumentFormControl" />
+      <div class="argument">)</div>
+    </ng-container>
   </div>
 </div>

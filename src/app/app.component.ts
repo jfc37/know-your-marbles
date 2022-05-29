@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Diagram } from './logic/diagram';
-import { invokeOperator, Operators } from './logic/operation-map';
+import {
+  DEFAULT_OPERATOR_ARGUMENT_MAP,
+  invokeOperator,
+  Operators,
+} from './logic/operation-map';
 
 @Component({
   selector: 'rx-root',
@@ -9,9 +13,11 @@ import { invokeOperator, Operators } from './logic/operation-map';
 })
 export class AppComponent implements OnInit {
   public inputDiagram: Diagram = getInitialMarbleDiagram();
-  public pipes: { diagram?: Diagram; operation: Operators }[] = [
-    getDefaultPipe(),
-  ];
+  public pipes: {
+    diagram?: Diagram;
+    operation: Operators;
+    argument?: string;
+  }[] = [getDefaultPipe()];
   public outputDiagram: Diagram = getInitialMarbleDiagram();
 
   public numberOfTick = 5;
@@ -45,8 +51,15 @@ export class AppComponent implements OnInit {
     this.recalculateOutputMarbles();
   }
 
+  public argumentChanged(argument: string, index: number): void {
+    this.pipes[index].argument = argument;
+
+    this.recalculateOutputMarbles();
+  }
+
   public operationChanged(operation: Operators, index: number): void {
     this.pipes[index].operation = operation;
+    this.pipes[index].argument = DEFAULT_OPERATOR_ARGUMENT_MAP[operation];
 
     if (UNARY_OPERATORS.includes(operation)) {
       this.pipes[index].diagram = undefined;
@@ -60,12 +73,22 @@ export class AppComponent implements OnInit {
 
   private recalculateOutputMarbles(): void {
     this.outputDiagram = this.pipes.reduce((inputDiagram, pipe) => {
-      return invokeOperator(pipe.operation, inputDiagram, pipe.diagram);
+      return invokeOperator(
+        pipe.operation,
+        inputDiagram,
+        pipe.diagram,
+        pipe.argument
+      );
     }, this.inputDiagram);
   }
 }
 
-const UNARY_OPERATORS = [Operators.First, Operators.Max, Operators.Min];
+const UNARY_OPERATORS = [
+  Operators.First,
+  Operators.Max,
+  Operators.Min,
+  Operators.StartWith,
+];
 const BINARY_OPERATORS = [
   Operators.ConcatWith,
   Operators.Merge,

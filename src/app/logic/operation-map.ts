@@ -8,6 +8,7 @@ import {
   mergeWith,
   min,
   switchMap,
+  startWith,
 } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { Diagram } from './diagram';
@@ -19,24 +20,59 @@ export enum Operators {
   Max = 'max',
   Merge = 'merge',
   Min = 'min',
+  StartWith = 'start with',
   SwitchMap = 'switch map',
   TakeUntil = 'take until',
 }
 
+export enum OperatorArgument {
+  None,
+  Value,
+}
+
+export const OPERATOR_ARGUMENT_MAP = {
+  [Operators.ConcatWith]: OperatorArgument.None,
+  [Operators.First]: OperatorArgument.None,
+  [Operators.Max]: OperatorArgument.None,
+  [Operators.Merge]: OperatorArgument.None,
+  [Operators.Min]: OperatorArgument.None,
+  [Operators.StartWith]: OperatorArgument.Value,
+  [Operators.SwitchMap]: OperatorArgument.None,
+  [Operators.TakeUntil]: OperatorArgument.None,
+};
+
+export const DEFAULT_OPERATOR_ARGUMENT_MAP = {
+  [Operators.ConcatWith]: undefined,
+  [Operators.First]: undefined,
+  [Operators.Max]: undefined,
+  [Operators.Merge]: undefined,
+  [Operators.Min]: undefined,
+  [Operators.StartWith]: '2',
+  [Operators.SwitchMap]: undefined,
+  [Operators.TakeUntil]: undefined,
+};
+
 const OPERATOR_FN_MAP = {
-  [Operators.ConcatWith]: (obs$: Observable<any>) => concatWith(obs$),
-  [Operators.First]: (obs$: Observable<any>) => first(),
-  [Operators.Max]: (obs$: Observable<any>) => max(),
-  [Operators.Merge]: (obs$: Observable<any>) => mergeWith(obs$),
-  [Operators.Min]: (obs$: Observable<any>) => min(),
-  [Operators.SwitchMap]: (obs$: Observable<any>) => switchMap(() => obs$),
-  [Operators.TakeUntil]: (obs$: Observable<any>) => takeUntil(obs$),
+  [Operators.ConcatWith]: (obs$: Observable<any>, argument: string) =>
+    concatWith(obs$),
+  [Operators.First]: (obs$: Observable<any>, argument: string) => first(),
+  [Operators.Max]: (obs$: Observable<any>, argument: string) => max(),
+  [Operators.Merge]: (obs$: Observable<any>, argument: string) =>
+    mergeWith(obs$),
+  [Operators.Min]: (obs$: Observable<any>, argument: string) => min(),
+  [Operators.StartWith]: (obs$: Observable<any>, argument: string) =>
+    startWith(argument),
+  [Operators.SwitchMap]: (obs$: Observable<any>, argument: string) =>
+    switchMap(() => obs$),
+  [Operators.TakeUntil]: (obs$: Observable<any>, argument: string) =>
+    takeUntil(obs$),
 };
 
 export function invokeOperator(
   operator: Operators,
   input: Diagram,
-  secondaryInput?: Diagram
+  secondaryInput?: Diagram,
+  argument?: string
 ): Diagram {
   let diagram = Diagram.create('');
 
@@ -49,7 +85,7 @@ export function invokeOperator(
     const input$ = cold(input.diagram, input.values);
     const secondaryInput$ =
       secondaryInput && cold(secondaryInput.diagram, secondaryInput.values);
-    const rxjsOperator = OPERATOR_FN_MAP[operator](secondaryInput$!);
+    const rxjsOperator = OPERATOR_FN_MAP[operator](secondaryInput$!, argument!);
     const output$ = input$.pipe(rxjsOperator);
     expectObservable(output$).toBe('');
   });

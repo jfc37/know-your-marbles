@@ -9,6 +9,7 @@
 <rx-pipe-operator
   *ngFor="let pipe of pipes; let i = index"
   [availableOperations]="operations"
+  [argument]="pipe.argument"
   [hueAdjust]="1.2 + (i * 2) / 10"
   [diagram]="pipe.diagram"
   [operation]="pipe.operation"
@@ -16,6 +17,7 @@
   [showRemove]="i > 0"
   (addClicked)="addPipe(i)"
   (removeClicked)="removePipe(i)"
+  (argumentChanged)="argumentChanged($event, i)"
   (operationSelected)="operationChanged($event, i)"
   (diagramChanged)="pipeDiagramChanged($event, i)"
 ></rx-pipe-operator>

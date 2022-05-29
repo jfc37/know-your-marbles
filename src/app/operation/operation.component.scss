@@ -13,10 +13,45 @@
 }
 
 select {
-  z-index: 5;
+  border-radius: 0.25rem;
+}
+
+select,
+input,
+.argument {
   width: 10rem;
   height: 3rem;
   font-size: 1.6rem;
   text-align: center;
-  border-radius: 0.25rem;
+}
+
+input {
+  width: 2rem;
+}
+
+.argument,
+input {
+  background-color: var(--white);
+  border: none;
+  padding: 1px 2px;
+}
+
+.argument {
+  max-width: fit-content;
+}
+
+.argument:first-of-type {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.argument:last-of-type {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  padding-right: 0.5rem;
+}
+
+select + .argument {
+  margin-left: 1rem;
 }

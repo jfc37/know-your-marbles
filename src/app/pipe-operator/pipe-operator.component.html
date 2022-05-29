@@ -1,6 +1,8 @@
 <rx-operation
   [availableOperations]="availableOperations"
   [operation]="operation"
+  [argument]="argument"
+  (argumentChanged)="argumentChanged.emit($event)"
   (operationSelected)="operationSelected.emit($event)"
 ></rx-operation>
 <rx-input-stream
