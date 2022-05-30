@@ -83,23 +83,32 @@ export class AppComponent implements OnInit {
 }
 
 const UNARY_OPERATORS = [
+  Operators.AuditTime,
   Operators.Delay,
   Operators.DebounceTime,
   Operators.Distinct,
   Operators.DistinctUntilChanged,
+  Operators.EndWith,
   Operators.Filter,
   Operators.First,
+  Operators.Last,
   Operators.Map,
   Operators.Max,
   Operators.Min,
+  Operators.Repeat,
+  Operators.Retry,
+  Operators.Pairwise,
   Operators.StartWith,
+  Operators.ThrottleTime,
+  Operators.ThrowIfEmpty,
 ];
 
 const BINARY_OPERATORS = [
+  Operators.Buffer,
   Operators.CatchError,
   Operators.CombineLatestWith,
   Operators.ConcatWith,
-  Operators.Merge,
+  Operators.MergeWith,
   Operators.RaceWith,
   Operators.SwitchMap,
   Operators.TakeUntil,
