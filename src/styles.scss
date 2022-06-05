@@ -71,7 +71,7 @@ h6 {
 }
 
 :root {
-  --max-width: 900px;
+  --max-width: min(900px, 100vw - 4rem);
   --color-text: hsl(222deg, 22%, 15%);
   --green: hsl(180, 47%, 56%);
   --blue: #4062bb;

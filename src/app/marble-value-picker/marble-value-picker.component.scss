@@ -1,13 +1,15 @@
 :host {
-  min-width: 800px;
+  width: min(var(--max-width), 70vw);
   display: flex;
   flex-wrap: wrap;
+  height: min(80vh, calc(100vh - 48px));
   justify-content: space-around;
   gap: 2rem;
 }
 
+form,
 section {
-  min-width: 300px;
+  min-width: min(300px, 100%);
   min-height: 200px;
 
   display: flex;
