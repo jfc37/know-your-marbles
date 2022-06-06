@@ -6,13 +6,16 @@
       </option>
     </select>
 
-    <ng-container *ngIf="isValueArgument">
+    <div *ngIf="isValueArgument" class="argument-wrapper">
       <div class="argument">(</div>
       <input type="text" [formControl]="argumentFormControl" />
       <div class="argument">)</div>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="isEvaluationArgument || isProjectionArgument">
+    <div
+      *ngIf="isEvaluationArgument || isProjectionArgument"
+      class="argument-wrapper"
+    >
       <div class="argument">(x =></div>
       <input
         class="evaluation"
@@ -20,6 +23,6 @@
         [formControl]="argumentFormControl"
       />
       <div class="argument">)</div>
-    </ng-container>
+    </div>
   </div>
 </div>

@@ -8,6 +8,7 @@
   height: 8rem;
   padding: 0.5rem 1rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -33,6 +34,12 @@ input.evaluation {
   width: 6rem;
 }
 
+.argument-wrapper {
+  display: flex;
+  justify-content: center;
+  min-width: 18rem;
+}
+
 .argument,
 input {
   background-color: var(--white);
@@ -41,7 +48,7 @@ input {
 }
 
 .argument {
-  max-width: fit-content;
+  max-width: max-content;
   line-height: 3rem;
 }
 
